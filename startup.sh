@@ -2,7 +2,7 @@
 
 # install common softwares
 apt update && yes Y | apt install zsh tldr tree net-tools
-if [[ $? -ne 0]]; then
+if [[ $? -ne 0 ]]; then
 	echo "apt install failed"
 	exit 1
 fi
