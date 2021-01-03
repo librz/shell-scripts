@@ -26,5 +26,3 @@ echo "ssh listen port is set to 9000, ClientAliveInterval is enabled"
 # set timezone to Asia/Shanghai
 cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 echo "timzeon is set to Asia/Shanghai"
-
-exit 0
