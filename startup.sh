@@ -18,10 +18,10 @@ curl https://raw.githubusercontent.com/Patrick-Ren/shell_scripts/main/.zshrc > ~
 
 echo "custom .vimrc and .zshrc is in place"
 
-# change ssh listen port(sshd port) to 9000, use default ClientAliveInterval
+# change ssh listen port(sshd port) to 9000, set ClientAliveInterval to 5 seconds
 sed -i 's/#Port 22/Port 9000/g' /etc/ssh/sshd_config
-sed -i 's/#ClientAliveInterval/ClientAliveInterval/g' /etc/ssh/sshd_config
-echo "ssh listen port is set to 9000, ClientAliveInterval is enabled"
+sed -i 's/#ClientAliveInterval 0/ClientAliveInterval 5/g' /etc/ssh/sshd_config
+echo "ssh listen port is set to 9000, ClientAliveInterval is set to 5"
 
 # set timezone to Asia/Shanghai
 cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
