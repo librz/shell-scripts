@@ -22,3 +22,7 @@ alias sop="netstat -tulpn | awk '(NR >= 3){print $4}' | grep '::' | cut -d':' -f
 
 # see how much disk is used, ds for disk status
 alias ds="df -h | awk '/Filesystem|overlay/ {print $5}'"
+
+# config locale
+export LC_ALL=en_US.UTF-8
+export LANG=zh_CN.UTF-8
