@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # install common softwares
-apt update && yes Y | apt install zsh tldr tree net-tools
+apt update && yes Y | apt install zsh tldr tree net-tools language-pack-zh-hans
 if [[ $? -ne 0 ]]; then
 	echo "apt install failed"
 	exit 1
