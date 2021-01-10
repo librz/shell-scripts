@@ -25,6 +25,9 @@ alias tomorrow='date --date="+1 day" --rfc-3339=date'
 alias gh="cd ~"
 alias gohome="cd ~"
 
+# bye for logout
+alias bye="logout"
+
 # scan for open port on "this" machine, may not be altogether correct
 alias sop="netstat -tulpn | awk '(NR >= 3){print $4}' | grep '::' | cut -d':' -f4"
 
