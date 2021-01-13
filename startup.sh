@@ -2,11 +2,7 @@
 
 # install common softwares
 apt update && yes Y | apt install zsh tldr tree net-tools language-pack-zh-hans
-if [[ $? -ne 0 ]]; then
-	echo "apt install failed"
-	exit 1
-fi
-echo "zsh, tldr, tree, net-tools installed"
+snap install gost
 
 # chang shell to zsh
 chsh -s $(which zsh) && echo "switched login shell to zsh, you may need to re-login for this to take effect"
