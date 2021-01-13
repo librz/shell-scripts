@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # install common softwares
-apt update && yes Y | apt install zsh snapd curl tldr tree net-tools language-pack-zh-hans
+apt update && yes Y | apt install zsh vim snapd curl tldr tree net-tools language-pack-zh-hans
 snap install gost
 
 # chang shell to zsh
