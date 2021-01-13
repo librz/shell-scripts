@@ -12,9 +12,9 @@ echo "zsh, tldr, tree, net-tools installed"
 chsh -s $(which zsh) && echo "switched login shell to zsh, you may need to re-login for this to take effect"
 
 # custom vim config
-curl https://raw.githubusercontent.com/Patrick-Ren/shell_scripts/main/.vimrc > ~/.vimrc
+curl https://raw.githubusercontent.com/librz/shell_scripts/main/.vimrc > ~/.vimrc
 # custom zsh config
-curl https://raw.githubusercontent.com/Patrick-Ren/shell_scripts/main/.zshrc > ~/.zshrc
+curl https://raw.githubusercontent.com/librz/shell_scripts/main/.zshrc > ~/.zshrc
 
 echo "custom .vimrc and .zshrc is in place"
 
@@ -25,4 +25,4 @@ echo "ssh listen port is set to 9000, ClientAliveInterval is set to 5"
 
 # set timezone to Asia/Shanghai
 cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-echo "timzeon is set to Asia/Shanghai"
+echo "timzone is set to Asia/Shanghai"
