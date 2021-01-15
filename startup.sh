@@ -8,9 +8,9 @@ snap install gost
 chsh -s $(which zsh) && echo "switched login shell to zsh, you may need to re-login for this to take effect"
 
 # custom vim config
-curl https://raw.githubusercontent.com/librz/shell_scripts/main/.vimrc > ~/.vimrc
+curl -L https://raw.githubusercontent.com/librz/shell_scripts/main/.vimrc > ~/.vimrc
 # custom zsh config
-curl https://raw.githubusercontent.com/librz/shell_scripts/main/.zshrc > ~/.zshrc
+curl -L https://raw.githubusercontent.com/librz/shell_scripts/main/.zshrc > ~/.zshrc
 
 echo "custom .vimrc and .zshrc is in place"
 
