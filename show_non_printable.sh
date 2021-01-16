@@ -6,7 +6,7 @@
 # 思路：先把字符串转为 hex，替换 line feed 的 hex 为 \和n 的 hex, 替换 tab 的 hex 为 \和t 的 hex; 再用 xxd 把 hex 转为 ascii 字符
 
 # to use hexdump, bsdmainutils must be installed
-yes Y | apt -q install bsdmainutils xxd > /dev/null
+yes Y | apt install bsdmainutils xxd > /dev/null
 
 # newline ascii hex code: 0a
 # tab ascii hex code: 09
