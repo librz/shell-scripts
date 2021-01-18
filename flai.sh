@@ -1,7 +1,7 @@
 #!/usr/bin
 
 # flai => find line and insert
-# usage: bash <(curl -L https://raw.githubusercontent.com/librz/shell_scripts/main/fai.sh) /path/to/file "first line\nsecond line"
+# usage: bash <(curl -L https://raw.githubusercontent.com/librz/shell_scripts/main/flai.sh) /path/to/file "first line\nsecond line"
 
 input=$1
 insertion=$2
