@@ -26,4 +26,4 @@ if [[ $found = false ]]; then
   exit 1
 fi
 
-echo -e "$result" > "$input"
+echo -e "$result" > "$1"
