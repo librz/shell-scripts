@@ -1,11 +1,11 @@
-#!/bin/sh
+#!/bin/bash
 
 # install common softwares
 apt update && yes Y | apt install zsh vim snapd curl tldr tree net-tools language-pack-zh-hans
 snap install gost
 
 # chang shell to zsh
-chsh -s $(which zsh) && echo "switched login shell to zsh, you may need to re-login for this to take effect"
+chsh -s "$(which zsh)" && echo "switched login shell to zsh, you may need to re-login for this to take effect"
 
 # custom vim config
 curl -L https://raw.githubusercontent.com/librz/shell_scripts/main/.vimrc > ~/.vimrc
