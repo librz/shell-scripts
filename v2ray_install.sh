@@ -61,6 +61,6 @@ fi
 # insert reverse proxy setting to nginx config
 setting='\nlocation /v2 {\n    proxy_redirect off;\n    proxy_pass http://127.0.0.1:60000; \n    proxy_http_version 1.1;\n    proxy_set_header Upgrade $http_upgrade;\n    proxy_set_header Connection "upgrade";\n    proxy_set_header Host $http_host;\n    proxy_set_header X-Real-IP $remote_addr;\n    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n  }\n'
 # find the fist occurence of "managed by Certbot" ans insert setting after it 
-bash <(curl -L https://raw.githubusercontent.com/librz/shell_scripts/main/flai.sh) /etc/nginx/sites-available "managed by Certbot"  "$setting"
+bash <(curl -L https://raw.githubusercontent.com/librz/shell_scripts/main/flai.sh) /etc/nginx/sites-available/default "managed by Certbot"  "$setting"
 
 service nginx restart
