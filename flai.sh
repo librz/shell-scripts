@@ -1,4 +1,4 @@
-#!/usr/bin
+#!/bin/bash
 
 # flai => find line and insert
 # usage: bash <(curl -L https://raw.githubusercontent.com/librz/shell_scripts/main/flai.sh) /path/to/file "text to search"  "first line\nsecond line"
@@ -11,8 +11,7 @@ do
   if [[ $found = true ]]; then
     result="$result\n$line"
   else 
-    echo "$line" | grep "$2" > /dev/null 2>&1 
-    if [[ $? -eq 0 ]]; then
+    if echo "$line" | grep "$2" > /dev/null 2>&1; then
       result="$result\n$line\n$3"
       found=true
     else
