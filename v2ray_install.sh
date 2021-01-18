@@ -52,7 +52,7 @@ echo $config > /usr/local/etc/v2ray/config.json
 service v2ray restart
 
 # hook certbot with nginx
-echo -e "Y\n$doamin\n" | certbot --nginx  -register-unsafely-without-email
+echo -e "Y\n$doamin\n" | certbot --nginx  --register-unsafely-without-email
 if [[ $? -ne 0 ]]; then
 	echo "certbot 设置出现问题，安装失败"
 	exit 1
