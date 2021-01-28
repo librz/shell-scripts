@@ -73,9 +73,8 @@ elif [[ "$1" = "--program" ]]; then
 		exit 6
 	fi
 	# find pid(s), a program can have many process
-	# pid=$(pgrep "$program"), I don't like pgrep's way of matching
-	# what i need is exact match
-	pid=$(ps aux | awk '{print $2, $11}' | tr -d ':' | awk -v pattern="$program$" '($NF ~ pattern){print $1}')
+	# pgrep's -x flag means exact match
+	pid=$(pgrep -x "$program")
 	if [[ -z "$pid" ]]; then
 		echo "$program doesn't have any running process"
 		exit 7
