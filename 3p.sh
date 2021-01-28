@@ -37,7 +37,7 @@ if [[ "$#" -ne 2 ]]; then
 	exit 3;
 elif [[ "$1" = "--port" ]]; then
 	port="$2"
-	segment=$(netstat -tulpn | awk -v pattern="$port$" '(NR>2 && $4 ~ pattern){print $7}')
+	segment=$(netstat -tulpn | awk -v pattern=":$port$" '(NR>2 && $4 ~ pattern){print $7}')
 	if [[ -z "$segment" ]]; then
 		echo "no process is listening on port $port"
 		exit 4
