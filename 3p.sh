@@ -3,9 +3,9 @@
 # 3p: program, process, port
 
 # usage:
-# 3p --program nginx
-# 3p --pid 1234
-# 3p --port 80
+# bash <(curl -sL https://raw.githubusercontent.com/librz/shell_scripts/main/3p.sh) --program nginx
+# bash <(curl -sL https://raw.githubusercontent.com/librz/shell_scripts/main/3p.sh) --pid 1234
+# bash <(curl -sL https://raw.githubusercontent.com/librz/shell_scripts/main/3p.sh) --port 80
 
 # check distro
 distro=$(head -1 /etc/os-release | cut -d'"' -f2)
