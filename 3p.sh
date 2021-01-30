@@ -16,14 +16,7 @@ fi
 
 # check if awk & netstat is installed
 if ! (command -v awk netstat &> /dev/null); then
-	echo "to run this script, awk & netstat are required"
-	echo "Install them right now?(Y/n)"
-	read -r answer
-	if [[ $answer = "Y" || $answer = "y" ]]; then
-		apt install awk net-tools
-	else
-		exit 2
-	fi
+		apt install awk net-tools &>/dev/null
 fi
 
 # find port(s) by pid, 1 process can listen on many ports
