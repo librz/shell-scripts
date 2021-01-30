@@ -1,8 +1,9 @@
 " show line number
 set number
 
-" set tab space to 2
-set ts=2
+" set tab & indent to 2 spaces
+set tabstop=2
+set shiftwidth=2
 
 " set encoding to utf-8
 set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
