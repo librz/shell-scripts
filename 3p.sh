@@ -1,11 +1,18 @@
 #!/bin/bash
 
-# 3p: program, process, port
+# 3p: program, pid, port
 
 # usage:
 # bash <(curl -sL https://raw.githubusercontent.com/librz/shell_scripts/main/3p.sh) --program nginx
 # bash <(curl -sL https://raw.githubusercontent.com/librz/shell_scripts/main/3p.sh) --pid 1234
 # bash <(curl -sL https://raw.githubusercontent.com/librz/shell_scripts/main/3p.sh) --port 80
+
+: '
+output format example, each line except the frist line represents a process
+Program    Pid        Port
+nginx      87236      80,443              
+nginx      358789     none 
+'
 
 # check distro
 distro=$(head -1 /etc/os-release | cut -d'"' -f2)
@@ -14,17 +21,41 @@ if [[ $distro != "Ubuntu" ]]; then
 	exit 1 
 fi
 
-# check if awk & netstat is installed
+# check if awk & netstat is installed, if not, install them
 if ! (command -v awk netstat &> /dev/null); then
-		apt install awk net-tools &>/dev/null
+	echo "to run this script, awk & netstat are required"
+	echo "Install them right now?(Y/n)"
+	read -r answer
+	if [[ $answer = "Y" || $answer = "y" ]]; then
+		yes Y | apt install awk net-tools &> /dev/null
+	else
+		exit 2
+	fi
 fi
 
 # find port(s) by pid, 1 process can listen on many ports
 function printPortsByPid {
-	ports=$(netstat -tulpn | awk -v pattern="^$1" '(NR>2 && $7 ~ pattern){print $4}' | awk -F':' '{print $NF}' | sort -n | uniq | tr '\n' ' ')
+	ports=$(netstat -tulpn | awk -v pattern="^$1" '(NR>2 && $7 ~ pattern){print $4}' | awk -F':' '{print $NF}' | sort -n | uniq | tr '\n' ',' | sed 's/,$//')
 	echo "$ports"
 }
 
+# format output
+
+function printResultHeader {
+	printf "%-10s %-10s %-20s\n" "Program" "Pid" "Port"
+}
+
+function printResultBody {
+	local program="$1"
+	local pid="$2"
+	local port="$3"
+	if [[ -z "$port" ]]; then
+		port="none"
+	fi
+	printf "%-10s %-10d %-20s\n" "$program" "$pid" "$port"
+}
+
+# main program starts here
 if [[ "$#" -ne 2 ]]; then
 	echo "wrong usage"
 	exit 3;
@@ -41,7 +72,8 @@ elif [[ "$1" = "--port" ]]; then
 	# find pid
 	pid=$(echo "$segment" | awk -F'[/:]' '{print $1}' | sort | uniq)
 	# format & output
-	echo "program:$program pid:$pid port:$port"
+	printResultHeader
+	printResultBody "$program" "$pid" "$port"
 elif [[ "$1" = "--pid" ]]; then
 	pid="$2"
 	# find program
@@ -53,11 +85,8 @@ elif [[ "$1" = "--pid" ]]; then
 	# find port(s), 1 process can listen on many ports
 	port=$(printPortsByPid "$pid")
 	# format & output
-	if [[ -z "$port" ]]; then
-		echo "program:$program pid:$pid port:none"
-	else
-		echo "program:$program pid:$pid port:$port"
-	fi
+	printResultHeader
+	printResultBody "$program" "$pid" "$port"
 elif [[ "$1" = "--program" ]]; then 
 	program="$2"
 	# test if program exits
@@ -66,20 +95,18 @@ elif [[ "$1" = "--program" ]]; then
 		exit 6
 	fi
 	# find pid(s), a program can have many process
-	# pgrep's -x flag means exact match
+	# pgrep -x flag means exact match
 	pid=$(pgrep -x "$program")
 	if [[ -z "$pid" ]]; then
 		echo "$program doesn't have any running process"
 		exit 7
 	fi
+	printResultHeader
 	# for each pid, find port
 	while IFS= read -r line
 	do
 		port=$(printPortsByPid "$line")
-		if [[ -z "$port" ]]; then
-			port="none"
-		fi
-		echo "program:$program pid:$line port:$port"
+		printResultBody "$program" "$line" "$port"
 	done <<< "$pid"
 else
 	echo "wrong option"

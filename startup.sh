@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# this is script I use whenever I set up a new Ubuntu server
+# use with caution, better read comment of each section before running them
+
 # install common softwares
 apt update && yes Y | apt install zsh vim git snapd curl tldr tree net-tools dnsutils language-pack-zh-hans
 
