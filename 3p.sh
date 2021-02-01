@@ -14,28 +14,32 @@ nginx      87236      80,443
 nginx      358789     none 
 '
 
+function err {
+	echo "$1" >&2
+}
+
 # check distro
-distro=$(head -1 /etc/os-release | cut -d'"' -f2)
-if [[ $distro != "Ubuntu" ]]; then
-	echo "sorry, this script only supports Ubuntu"
+if ! (grep -i ubuntu /etc/os-release &>/dev/null); then
+	err "sorry, this script only supports Ubuntu"
 	exit 1 
 fi
 
 # check if awk & netstat is installed, if not, install them
 if ! (command -v awk netstat &> /dev/null); then
-	echo "to run this script, awk & netstat are required"
-	echo "Install them right now?(Y/n)"
-	read -r answer
-	if [[ $answer = "Y" || $answer = "y" ]]; then
-		yes Y | apt install awk net-tools &> /dev/null
-	else
-		exit 2
-	fi
+	apt update && yes Y | apt install awk net-tools &> /dev/null
 fi
 
 # find port(s) by pid, 1 process can listen on many ports
 function printPortsByPid {
-	ports=$(netstat -tulpn | awk -v pattern="^$1" '(NR>2 && $7 ~ pattern){print $4}' | awk -F':' '{print $NF}' | sort -n | uniq | tr '\n' ',' | sed 's/,$//')
+	ports=$(
+		netstat -tulpn \
+		| awk -v pattern="^$1" '(NR>2 && $7 ~ pattern){print $4}' \
+		| awk -F':' '{print $NF}' \
+		| sort -n \
+		| uniq \
+		| tr '\n' ',' \
+		| sed 's/,$//'
+	)
 	echo "$ports"
 }
 
@@ -57,13 +61,13 @@ function printResultBody {
 
 # main program starts here
 if [[ "$#" -ne 2 ]]; then
-	echo "wrong usage"
+	err "wrong usage"
 	exit 3;
 elif [[ "$1" = "--port" ]]; then
 	port="$2"
 	segment=$(netstat -tulpn | awk -v pattern=":$port$" '(NR>2 && $4 ~ pattern){print $7}')
 	if [[ -z "$segment" ]]; then
-		echo "no process is listening on port $port"
+		err "no process is listening on port $port"
 		exit 4
 	fi
 	# if port is valid, there must be 1 and only 1 process and program listening to it
@@ -77,9 +81,14 @@ elif [[ "$1" = "--port" ]]; then
 elif [[ "$1" = "--pid" ]]; then
 	pid="$2"
 	# find program
-	program=$(ps aux | awk -v pid="$pid" '($2==pid){print $11}' | cut -d':' -f1 | awk -F'/' '{print $NF}' )
+	program=$(
+		ps aux \
+		| awk -v pid="$pid" '($2==pid){print $11}' \
+		| cut -d':' -f1 \
+		| awk -F'/' '{print $NF}'
+	)
 	if [[ -z "$program" ]]; then
-	 	echo "$pid is not valid process id"
+	 	err "no running process has pid $pid"
 		exit 5
 	fi	
 	# find port(s), 1 process can listen on many ports
@@ -91,14 +100,14 @@ elif [[ "$1" = "--program" ]]; then
 	program="$2"
 	# test if program exits
 	if ! (command -v "$program" &>/dev/null); then
-		echo "$program doesn't exist"
+		err "$program doesn't exist"
 		exit 6
 	fi
 	# find pid(s), a program can have many process
 	# pgrep -x flag means exact match
 	pid=$(pgrep -x "$program")
 	if [[ -z "$pid" ]]; then
-		echo "$program doesn't have any running process"
+		err "$program doesn't have any running process"
 		exit 7
 	fi
 	printResultHeader
@@ -109,6 +118,6 @@ elif [[ "$1" = "--program" ]]; then
 		printResultBody "$program" "$line" "$port"
 	done <<< "$pid"
 else
-	echo "wrong option"
+	err "wrong option"
 	exit 8;
 fi
