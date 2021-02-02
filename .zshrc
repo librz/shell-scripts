@@ -9,7 +9,7 @@ export LANG="zh_CN.UTF-8"
 bindkey -v
 bindkey jk vi-cmd-mode
 
-# set tab size in shell to 2 spaces
+# set tab size to 2 spaces
 tabs -2
 
 # edit/source zsh config
@@ -73,4 +73,33 @@ alias sac="git add . && git commit -m"
 
 # gs: git status
 alias gs="git status"
+# -------- end of git related ------
+
+# print file as binary string
+binary () {
+	xxd -b -c 1 "$1" \
+	| awk '{print $2}' \
+ 	| tr -d '\n' && echo	
+}
+
+# print file as hex string
+hex () {
+	xxd -c 1 "$1" \
+	| awk '{print $2}' \
+	| tr -d '\n' && echo
+}
+
+# print out cool emoji 
+cool () {
+	# f09f988e is utf-8 hex code for emoji(smiling face with sunglasses)
+	# 0a is ascii/utf-8 for line feed
+	echo -n "f09f988e0a" | xxd -r -p
+}
+
+# print middle finder emoji
+midfin () {
+	# f09f9695 is utf-8 hex code for this emoji
+	# 0a is ascii/utf-8 for line feed
+	echo -n "f09f96950a" | xxd -r -p
+}
 
