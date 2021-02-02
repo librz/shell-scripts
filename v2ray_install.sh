@@ -74,7 +74,11 @@ location /v2 {
 EOF
 )
 
-# find the fist occurence of "managed by Certbot" and insert setting after it 
-bash <(curl -L https://raw.githubusercontent.com/librz/shell_scripts/main/flai.sh) /etc/nginx/sites-available/default "managed by Certbot"  "$setting"
+# find the first occurence of "managed by Certbot" and insert setting after it 
+lineNumber=$(grep -in "managed by Certbot" /etc/nginx/default | awk -F':' '(NR==1){print $1}')
+echo "prepare to insert nginx setting at line $lineNumber"
+result=$(awk -v ln="$lineNumber" -v setting="$setting" 'NR==ln{print setting}1')
+echo "$result" > /etc/nginx/default
+echo "nginx setting inserted"
 
 service nginx restart
