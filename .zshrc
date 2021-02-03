@@ -1,4 +1,4 @@
-# change prompt
+# nice simple colored prompt
 export PS1="%10F%m%f:%11F%1~%f \$ "
 
 # locale setting
@@ -27,16 +27,8 @@ alias v='vim'
 alias h='history'
 alias w='which'
 
-# dates
-alias today='date --rfc-3339=date'
-alias yesterday='date --date="-1 day" --rfc-3339=date'
-alias tomorrow='date --date="+1 day" --rfc-3339=date'
-
 # gh for go home
 alias gh="cd ~"
-
-# bye for logout
-alias bye="logout"
 
 # mcd for mkdir && cd
 mcd() {
@@ -51,9 +43,6 @@ alias p5="ping -c 5"
 alias pubip="curl ifconfig.me"
 alias myip="curl ident.me"
 
-# scan open port on "this" machine
-alias sop="netstat -tln | awk '(NR>2) {print \$4}' | rev | cut -d':' -f1 | rev | sort -n | uniq"
-
 # how much disk space is left
 space () {
 				df -h | awk '($6=="/"){print $5, "of", $2, "is used"}'
@@ -63,9 +52,6 @@ space () {
 dirsize () {
 	du -sh $1 | awk '{print $1}'
 }
-
-# 3p: program, process, port 
-alias 3p="bash <(curl -sL https://raw.githubusercontent.com/librz/shell_scripts/main/3p.sh)"
 
 # -------- git related ---------
 # sac: stage all changes and commit
@@ -102,4 +88,17 @@ midfin () {
 	# 0a is ascii/utf-8 for line feed
 	echo -n "f09f96950a" | xxd -r -p
 }
+
+# today, bye, sop, 3p doesn't have freebsd support yet
+
+alias today='date --rfc-3339=date'
+
+# bye for logout in linux, exit in freebsd
+alias bye="logout"
+
+# scan open port on "this" machine
+alias sop="netstat -tln | awk '(NR>2) {print \$4}' | rev | cut -d':' -f1 | rev | sort -n | uniq"
+
+# 3p: program, process, port 
+alias 3p="bash <(curl -sL https://raw.githubusercontent.com/librz/shell_scripts/main/3p.sh)"
 
