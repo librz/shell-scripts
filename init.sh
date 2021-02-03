@@ -13,14 +13,25 @@ if grep -i "debian" /etc/os-release &>/dev/null; then
 	distro="debian"
 elif grep -i "ubuntu" /etc/os-release &>/dev/null; then
 	distro="ubuntu"
+elif uname | grep -i "FreeBSD" &>/dev/null; then
+	distro="freebsd"
 else
-	err "sorry, this script only supports debian and ubuntu, aborted"
+	err "sorry, this script only supports debian/ubuntu and FreeBSD, aborted"
 	exit 1
 fi
 
 # install common softwares
-if apt update && yes Y | apt install zsh vim git snapd curl tldr tree net-tools nmap dnsutils; then
-	echo "apt install successful"	
+if [[ "$distro" == "freebsd" ]]; then
+	pkg update
+	# tldr, net-tools, dnsutils are not aviailable in freebsd
+	if yes | pkg install zsh vim git curl tree nmap xxd; then
+		echo "pkg instal succeeded"
+	else
+		err "pkg install failed"	
+		exit 2
+	fi
+elif apt update && yes | apt install zsh vim git snapd curl tldr tree xxd net-tools nmap dnsutils; then
+	echo "apt install succeeded"
 else 
 	err "apt install failed, aborted"
 	exit 2
@@ -29,10 +40,10 @@ fi
 # language-pack-zh-hans is only aviailable in ubuntu 
 if [[ "$distro" = "ubuntu" ]]; then
 	# also install language-pack-zh-hans
-	yes Y | apt install language-pack-zh-hans
+	yes | apt install language-pack-zh-hans
 fi
 
-# add zsh to /etc/shells if it's not there 
+# ass zsh to /etc/shells if it's not there
 if ! (grep zsh /etc/shells &>/dev/null); then
 	command -v zsh >> /etc/shells
 fi
@@ -48,7 +59,9 @@ fi
 cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
 # set vim as default editor
-update-alternatives --set editor /usr/bin/vim.basic
+if [[ "$distro" != "freebsd" ]]; then
+	update-alternatives --set editor /usr/bin/vim.basic
+fi
 
 # custom vim config
 curl -L https://raw.githubusercontent.com/librz/shell_scripts/main/.vimrc > ~/.vimrc
