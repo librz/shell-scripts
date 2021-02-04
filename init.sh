@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# run this script whenever setting up a new server
+# run this script whenever setting up a new machine
+# it supports Debian/Ubuntu, MacOS & FreeBSD
 # usage: bash <(curl -sL https://raw.githubusercontent.com/librz/shell_scripts/main/init.sh)
 
 function err {
@@ -9,25 +10,33 @@ function err {
 
 # check distro
 distro=""
-if grep -i "debian" /etc/os-release &>/dev/null; then
-	distro="debian"
-elif grep -i "ubuntu" /etc/os-release &>/dev/null; then
-	distro="ubuntu"
-elif uname | grep -i "FreeBSD" &>/dev/null; then
-	distro="freebsd"
+if [[ -e /etc/os-release ]]; then
+	# Linux has /etc/os-release file
+	source /etc/os-release
+	if echo "$NAME" | grep -i debian &>/dev/null; then
+		distro="Debian"
+	elif echo "$NAME" | grep -i ubuntu &>/dev/null; then
+		distro="Ubuntu"
+	fi
+elif [[ $(uname) == "Darwin" ]]; then
+	distro="MacOS"
+elif [[ $(name) == "FreeBSD" ]]; then
+	distro="FreeBSD"
 else
-	err "sorry, this script only supports debian/ubuntu and FreeBSD, aborted"
+	err "Sorry, this script only support Debian/Ubuntu, FreeBSD/MacOS"
 	exit 1
 fi
 
+echo "You are running: $distro"
+
 # install common softwares
-if [[ "$distro" == "freebsd" ]]; then
+if [[ "$distro" == "FreeBSD" ]]; then
 	pkg update
 	# tldr, net-tools, dnsutils are not aviailable in freebsd
 	if yes | pkg install zsh vim git curl tree nmap xxd; then
 		echo "pkg instal succeeded"
 	else
-		err "pkg install failed"	
+		err "pkg install failed, aborted"
 		exit 2
 	fi
 elif apt update && yes | apt install zsh vim git snapd curl tldr tree xxd net-tools nmap dnsutils; then
@@ -38,7 +47,7 @@ else
 fi
 
 # language-pack-zh-hans is only aviailable in ubuntu 
-if [[ "$distro" = "ubuntu" ]]; then
+if [[ "$distro" = "Ubuntu" ]]; then
 	# also install language-pack-zh-hans
 	yes | apt install language-pack-zh-hans
 fi
@@ -58,8 +67,12 @@ fi
 #set timezone to Asia/Shanghai
 cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
+# install vim-plug
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+				http://realrz.com/scripts/plug.vim
+
 # set vim as default editor
-if [[ "$distro" != "freebsd" ]]; then
+if [[ "$distro" != "FreeBSD" ]]; then
 	update-alternatives --set editor /usr/bin/vim.basic
 fi
 

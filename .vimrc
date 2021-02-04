@@ -12,3 +12,8 @@ set encoding=utf-8
 
 " remap esc to jk 
 imap jk <Esc>
+
+" vim-plug section
+call plug#begin('~/.vim/plugged')
+
+call plug#end()
