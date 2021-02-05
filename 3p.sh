@@ -3,9 +3,9 @@
 # 3p: program, pid, port
 
 # usage:
-# bash <(curl -sL https://raw.githubusercontent.com/librz/shell_scripts/main/3p.sh) --program nginx
-# bash <(curl -sL https://raw.githubusercontent.com/librz/shell_scripts/main/3p.sh) --pid 1234
-# bash <(curl -sL https://raw.githubusercontent.com/librz/shell_scripts/main/3p.sh) --port 80
+# bash <(curl -sL http://realrz.com/scripts/3p.sh) --program nginx
+# bash <(curl -sL http://realrz.com/scripts/3p.sh) --pid 1234
+# bash <(curl -sL http://realrz.com/scripts/3p.sh) --port 80
 
 : '
 output format example, each line except the frist line represents a process
@@ -19,7 +19,13 @@ function err {
 }
 
 # check distro
-if ! (grep -i ubuntu /etc/os-release &>/dev/null); then
+if [[ -e /etc/os-release ]]; then
+	source /etc/os-release
+	if [[ "$NAME" != "Ubuntu" && "$NAME" != "Debian" ]]; then
+		err "sorry, this script only supports Ubuntu"
+		exit 1 
+	fi
+else
 	err "sorry, this script only supports Ubuntu"
 	exit 1 
 fi

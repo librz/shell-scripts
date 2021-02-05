@@ -2,7 +2,7 @@
 
 # aim: explicitly show line feed as "\n", show tab as "\t"
 
-# usage: bash <(curl -sL https://raw.githubusercontent.com/librz/shell_scripts/main/show_non_printable.sh) filename.txt
+# usage: bash <(curl -sL http://realrz.com/scripts/show_non_printable.sh) filename.txt
 
 # workflow: 
 # 1. tranform binary text file to hex
