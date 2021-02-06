@@ -3,21 +3,27 @@
 echo "V2ray + tls + nginx + websocket 安装配置脚本"
 
 echo "在运行此脚本之前，以下条件应该被满足："
-echo "1. 系统是 Ubuntu 18.04 或者以上并且使用 root 账号登陆"
+echo "1. 系统是 Ubuntu 或者 Debian 并且使用 root 账号登陆"
 echo "2. 系统上没有安装过 certbot"
 echo "3. 已经准备好域名并且 DNS 的 A 记录已经将域名指向本机的IP地址"
 
+err () {
+	echo "$1" >&2
+}
+
 read -p "是否继续? (Y/N) " -r answer
 if [[ $answer != "Y" ]] && [[ $answer != "y" ]]; then
-	echo "已退出"
+	err "已退出"
 	exit 1
 fi
+
+atp update
 
 # get domain
 read -p "请输入域名: " -r domain
 
 # install curl, nginx, snapd and certbot
-yes Y | apt install curl nginx snapd
+yes | apt install curl nginx snapd
 snap install --classic certbot
 if [[ ! -f /usr/bin/certbot ]]; then
 	ln -s /snap/bin/certbot /usr/bin/certbot

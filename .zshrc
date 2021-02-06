@@ -14,10 +14,10 @@ distro() {
 		# shellcheck disable=SC1091
 		source /etc/os-release
 	 	# /etc/os-release when sourced, give us the NAME variable	
-		if grep -i debian "$NAME" &>/dev/null; then
-			echo "Debian"
-		elif grep -i ubuntu "$NAME" &>/dev/null; then
+		if grep -i ubuntu "$NAME" &>/dev/null; then
 			echo "Ubuntu"
+		elif grep -i debian "$NAME" &>/dev/null; then
+			echo "Debian"
 		else
 			echo "$NAME"
 		fi
@@ -40,7 +40,7 @@ bindkey jk vi-cmd-mode
 # nice simple colored prompt
 export PS1="%10F%m%f:%11F%1~%f \$ "
 
-# set zsh to use 4 spaces to represent tabs 
+# set zsh to use 4 spaces to display tabs 
 tabs -4
 
 # locale setting

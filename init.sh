@@ -61,7 +61,7 @@ if [[ "$distro" = "Ubuntu" ]]; then
 	yes | apt install language-pack-zh-hans
 fi
 
-# ass zsh to /etc/shells if it's not there
+# add zsh to /etc/shells if it's not there
 if ! (grep zsh /etc/shells &>/dev/null); then
 	command -v zsh >> /etc/shells
 fi

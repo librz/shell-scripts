@@ -20,9 +20,10 @@ function err {
 
 # check distro
 if [[ -e /etc/os-release ]]; then
+	# shellcheck disable=SC1091
 	source /etc/os-release
 	if [[ "$NAME" != "Ubuntu" && "$NAME" != "Debian" ]]; then
-		err "sorry, this script only supports Ubuntu"
+		err "sorry, this script only supports Ubuntu/Debian"
 		exit 1 
 	fi
 else
@@ -32,7 +33,8 @@ fi
 
 # check if awk & netstat is installed, if not, install them
 if ! (command -v awk netstat &> /dev/null); then
-	apt update && yes Y | apt install awk net-tools &> /dev/null
+	apt update
+	yes | apt install awk net-tools &> /dev/null
 fi
 
 # find port(s) by pid, 1 process can listen on many ports
@@ -50,11 +52,9 @@ function printPortsByPid {
 }
 
 # format output
-
 function printResultHeader {
-	printf "%-10s %-10s %-20s\n" "Program" "Pid" "Port"
+	printf "%-15s %-10s %-20s\n" "Program" "Pid" "Port"
 }
-
 function printResultBody {
 	local program="$1"
 	local pid="$2"
@@ -62,7 +62,7 @@ function printResultBody {
 	if [[ -z "$port" ]]; then
 		port="none"
 	fi
-	printf "%-10s %-10d %-20s\n" "$program" "$pid" "$port"
+	printf "%-15s %-10d %-20s\n" "$program" "$pid" "$port"
 }
 
 # main program starts here
