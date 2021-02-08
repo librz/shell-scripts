@@ -40,7 +40,7 @@ bindkey jk vi-cmd-mode
 # nice simple colored prompt
 export PS1="%10F%m%f:%11F%1~%f \$ "
 
-# set zsh to use 4 spaces to display tabs 
+# set terminal's tab-width to be 4 columns 
 tabs -4
 
 # locale setting
