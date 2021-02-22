@@ -1,18 +1,17 @@
 #!/bin/bash
 
-# 3p: program, pid, port
+# 3p: program, port, pid
+# aim: coross reference 3p 
 
-# usage:
+# example usage:
 # bash <(curl -sL http://realrz.com/scripts/3p.sh) --program nginx
-# bash <(curl -sL http://realrz.com/scripts/3p.sh) --pid 1234
 # bash <(curl -sL http://realrz.com/scripts/3p.sh) --port 80
+# bash <(curl -sL http://realrz.com/scripts/3p.sh) --pid 1234
 
-: '
-output format example, each line except the frist line represents a process
-Program    Pid        Port
-nginx      87236      80,443              
-nginx      358789     none 
-'
+# output format example(each line except the header represents a single process):
+# Program    Pid        Port
+# nginx      87236      80,443
+# nginx      358789     none
 
 function err {
 	echo "$1" >&2
@@ -118,7 +117,7 @@ elif [[ "$1" = "--program" ]]; then
 	fi
 	printResultHeader
 	# for each pid, find port
-	while IFS= read -r line
+	while read -r line
 	do
 		port=$(printPortsByPid "$line")
 		printResultBody "$program" "$line" "$port"
