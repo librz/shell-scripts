@@ -7,8 +7,8 @@ err() {
 	echo "$1" >&2
 }
 
-# get distro
-distro() {
+# print distro
+printd() {
 	# linux has /etc/os-release 
 	if [[ -e /etc/os-release ]]; then
 		# shellcheck disable=SC1091
