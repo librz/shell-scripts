@@ -2,7 +2,7 @@
 
 #### 获取代码
 
-git clone https://github.com/librz/shell-scripts.git
+`git clone https://github.com/librz/shell-scripts.git`
 
 #### 执行脚本 (已经 git clone)
 
@@ -12,8 +12,6 @@ git clone https://github.com/librz/shell-scripts.git
 
 由于 raw.githubusercontent.com 国内访问不了，这些文件也被托管在 http://realrz.com/shell-scripts/ 下面
 
-比如要执行 3p.sh, 可以 curl -sL http://realrz.com/shell-scripts/3p.sh 再用 bash 执行:
+比如要执行 3p.sh, 可以 `curl -sL http://realrz.com/shell-scripts/3p.sh` 再用 bash 执行:
 
-```console
-bash <(curl -sL https://realrz.com/shell-scripts/3p.sh)
-```
+`bash <(curl -sL https://realrz.com/shell-scripts/3p.sh)`
