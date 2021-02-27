@@ -4,11 +4,15 @@
 # aim: explicitly show common non-printable characters in their escaped form
 # usage: bash <(curl -sL http://realrz.com/scripts/snp.sh) filename.txt
 
-# the following maps are supported 
-# 1. line feed => \n
+# the following mappings are supported
+# 1. newline (line feed) => \n
 # 2. carriage return => \r
 # 3. tab => \t
 # 4. space => \x20
+
+# options: by default, all the mappings above are carried out, you can specify those mappings
+# using options: -n: newline (line feed); -r: carriage return; -t: tab; -s: space
+# options can be combined, e.g. -nr means only transform newline and carriage return 
 
 # install xxd
 if ! command -v xxd &>/dev/null; then
