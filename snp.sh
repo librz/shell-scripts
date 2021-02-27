@@ -2,22 +2,38 @@
 
 # snp => show non-printable 
 # aim: explicitly show common non-printable characters in their escaped form
-# usage: bash <(curl -sL http://realrz.com/scripts/snp.sh) filename.txt
+# distro support: Debian, Ubuntu, macOS, FreeBSD
+# usage: bash <(curl -sL http://realrz.com/shell-scripts/snp.sh) /path/to/file
 
-# the following mappings are supported
-# 1. newline (line feed) => \n
-# 2. carriage return => \r
+# supported mappings
+# 1. carriage return => \r
+# 2. newline (line feed) => \n
 # 3. tab => \t
 # 4. space => \x20
 
-# options: by default, all the mappings above are carried out, you can specify those mappings
-# using options: -n: newline (line feed); -r: carriage return; -t: tab; -s: space
-# options can be combined, e.g. -nr means only transform newline and carriage return 
+# options 
+# by default, all the mappings are included, you can specify those mappings using options:
+# -r: carriage return
+# -n: newline (line feed)
+# -t: tab
+# -s: space
+# options can be combined, e.g.
+# bash <(curl -sL http://realrz.com/scripts/snp.sh) -rn /path/to/file
 
-# install xxd
+# check distro
+if ! distro=$(bash <(curl -sL http://realrz.com/shell-scripts/distro.sh)); then
+	exit 1
+fi
+
+# check if xxd is installed
 if ! command -v xxd &>/dev/null; then
-	apt update
-	yes | apt install xxd &> /dev/null  
+	if [[ "$distro" == "Debian" || "$distro" == "Ubuntu" ]]; then
+		yes | apt install xxd &> /dev/null  
+	else
+		echo "This script requires xxd to run"
+		echo "try install xxd first, then run this script again" 
+		exit 1
+	fi
 fi
 
 # character       UTF-8 hex    Printable
@@ -42,5 +58,5 @@ xxd -c 1 "$1" \
 | sed 's/20/5c783230/g' \
 | tr -d '\n' \
 | xxd -r -p
-# use echo to add new line to stdout
+# use echo to add newline to the end
 echo
