@@ -18,7 +18,7 @@
 # -t: tab
 # -s: space
 # options can be combined, e.g.
-# bash <(curl -sL http://realrz.com/scripts/snp.sh) -rn /path/to/file
+# bash <(curl -sL http://realrz.com/shell-scripts/snp.sh) -rn /path/to/file
 
 # check distro
 if ! distro=$(bash <(curl -sL http://realrz.com/shell-scripts/distro.sh)); then

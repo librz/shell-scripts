@@ -2,31 +2,14 @@
 
 # run this script whenever setting up a new machine
 # it supports Debian/Ubuntu, macOS & FreeBSD
-# usage: bash <(curl -sL http://realrz.com/scripts/init.sh)
+# usage: bash <(curl -sL http://realrz.com/shell-scripts/init.sh)
 
 function err {
 	echo "$1" >&2
 }
 
 # check distro
-distro=""
-if [[ -e /etc/os-release ]]; then
-	# Linux has /etc/os-release file
-	# shellcheck disable=SC1091
-	source /etc/os-release
-	# /etc/os-release when sourced, will add the $NAME environment variable
-	if echo "$NAME" | grep -i debian &>/dev/null; then
-		distro="Debian"
-	elif echo "$NAME" | grep -i ubuntu &>/dev/null; then
-		distro="Ubuntu"
-	fi
-elif [[ $(uname) == "Darwin" ]]; then
-	# god knows why Apple names its desktop system macOS starting with a lower case letter
-	distro="macOS"
-elif [[ $(name) == "FreeBSD" ]]; then
-	distro="FreeBSD"
-else
-	err "Sorry, this script only support Debian/Ubuntu, FreeBSD/macOS"
+if ! distro=$(bash <(curl -sL http://realrz.com/shell-scripts/distro.sh)); then
 	exit 1
 fi
 
@@ -78,12 +61,12 @@ cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
 # install vim-plug
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-				http://realrz.com/scripts/plug.vim
+				http://realrz.com/shell-scripts/plug.vim
 
 # custom vim config
-curl -L http://realrz.com/scripts/.vimrc > ~/.vimrc
+curl -L http://realrz.com/shell-scripts/.vimrc > ~/.vimrc
 # custom zsh config
-curl -L http://realrz.com/scripts/.zshrc > ~/.zshrc
+curl -L http://realrz.com/shell-scripts/.zshrc > ~/.zshrc
 
 if [[ "$distro" != "macOS" ]]; then
 	# change ssh listen port(sshd port) to 9000, set ClientAliveInterval to 5 seconds

@@ -4,9 +4,9 @@
 # aim: coross reference 3p 
 
 # example usage:
-# bash <(curl -sL http://realrz.com/scripts/3p.sh) --program nginx
-# bash <(curl -sL http://realrz.com/scripts/3p.sh) --port 80
-# bash <(curl -sL http://realrz.com/scripts/3p.sh) --pid 1234
+# bash <(curl -sL http://realrz.com/shell-scripts/3p.sh) --program nginx
+# bash <(curl -sL http://realrz.com/shell-scripts/3p.sh) --port 80
+# bash <(curl -sL http://realrz.com/shell-scripts/3p.sh) --pid 1234
 
 # output format example(each line except the header represents a single process):
 # Program    Pid        Port
@@ -18,16 +18,13 @@ function err {
 }
 
 # check distro
-if [[ -e /etc/os-release ]]; then
-	# shellcheck disable=SC1091
-	source /etc/os-release
-	if [[ "$NAME" != "Ubuntu" && "$NAME" != "Debian" ]]; then
-		err "sorry, this script only supports Ubuntu/Debian"
-		exit 1 
-	fi
-else
-	err "sorry, this script only supports Ubuntu"
-	exit 1 
+if ! distro=$(bash <(curl -sL http://realrz.com/shell-scripts/distro.sh)); then
+	exit 1
+fi
+
+if [[ "$distro" != "Debian" && "$distro" != "Ubuntu" ]]; then
+	echo "Sorry, this script only supports Debian/Ubuntu"
+	exit 2
 fi
 
 # check if awk & netstat is installed, if not, install them

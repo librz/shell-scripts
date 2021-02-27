@@ -1,9 +1,8 @@
 #!/bin/bash
 
-# printd => print dsitro
-# usage: bash <(curl -sL http://realrz.com/scripts/printd.sh)
-
+# get distro
 # supported distros: Debian, Ubuntu, macOS, FreeBSD
+# usage: bash <(curl -sL http://realrz.com/shell-scripts/distro.sh)
 
 distro=""
 if [[ -e /etc/os-release ]]; then
