@@ -128,6 +128,8 @@ sop () {
 	fi
 }
 
+# 3p: program, pid, port
+alias 3p="bash<(curl -sL http://realrz.com/shell-scripts/3p.sh)"
 
 # print file as binary string
 binary () {
