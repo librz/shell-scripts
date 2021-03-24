@@ -14,19 +14,17 @@ distro() {
 		# shellcheck disable=SC1091
 		source /etc/os-release
 	 	# /etc/os-release when sourced, give us the NAME variable	
-		if grep -i ubuntu "$NAME" &>/dev/null; then
-			echo "Ubuntu"
-		elif grep -i debian "$NAME" &>/dev/null; then
+		if grep -i debian "$NAME" &>/dev/null; then
 			echo "Debian"
+		elif grep -i ubuntu "$NAME" &>/dev/null; then
+			echo "Ubuntu"
 		else
 			echo "$NAME"
 		fi
 	else
-		# use uname, print Darwin on mac, FreeBSD on FreeBSD
+		# use uname, print Darwin on mac
 		if uname | grep -i darwin &>/dev/null; then
 			echo "macOS"
-		elif uname | grep -i freebsd &>/dev/null; then
-			echo "FreeBSD"
 		else
 			echo uname
 		fi
@@ -40,7 +38,7 @@ bindkey jk vi-cmd-mode
 # nice simple colored prompt
 export PS1="%10F%m%f:%11F%1~%f \$ "
 
-# set terminal's tab-width to be 4 columns 
+# set terminal tab-width to be 4 columns 
 tabs -4
 
 # locale setting
@@ -52,7 +50,7 @@ if [[ $(distro) == "Debian" || $(distro) == "Ubuntu" ]]; then
 	update-alternatives --set editor /usr/bin/vim.basic
 else
 	# export EDITOR as environment variable
-	# this will set vim as default editor on macOS and FreeBSD
+	# this will set vim as default editor on macOS
 	EDITOR=$(which vim)
 	export EDITOR
 fi
@@ -65,7 +63,7 @@ alias sz="source ~/.zshrc"
 # edit vim config
 alias vc="vim ~/.vimrc"
 
-alias b="cd .. && echo -n 'back to ' && pwd"
+alias b="cd .."
 alias c='clear'
 alias v='vim'
 alias h='history'
@@ -91,7 +89,7 @@ alias myip="curl ident.me"
 alias sac="git add . && git commit -m"
 
 # gs: git status
-alias gs="git status"
+alias gs="git fetch && git status"
 # -------- end of git related ------
 
 # mcd for mkdir && cd
@@ -101,7 +99,7 @@ mcd() {
 
 # today in format "YYYY-MM-DD"
 today () {
-	if [[ $(distro) == "macOS" || $(distro) == "FreeBSD" ]]; then
+	if [[ $(distro) == "macOS" ]]; then
 		date "+%Y-%m-%d"
 	else
 		date --rfc-3339=date
@@ -119,14 +117,14 @@ space () {
 
 # sop: scan open port
 sop () {
-	# netstat works very differently in Linux & BSD based systems
-	if [[ $(distro) == "macOS" || $(distro) == "FreeBSD" ]]; then
+	# netstat works very differently in Linux & BSD based systems such as macOS
+	if [[ $(distro) == "macOS" ]]; then
 		netstat -n -f inet -p tcp | awk 'NR>2{print $4}' | awk -F'.' '{print $NF}' | sort -n | uniq
 	elif [[ $(distro) == "Debian" || $(distro) == "Ubuntu" ]]; then
 		netstat -tln | awk '(NR>2) {print \$4}' | awk -F':' '{print $NF}' | sort -n | uniq
 	else
 		err "you system is not supported"
-		# dont't write an exit here, cause it quit the current shell
+		# dont't use exit here, cause it quit the current shell
 	fi
 }
 
@@ -152,10 +150,8 @@ cool () {
 	echo -n "f09f988e0a" | xxd -r -p
 }
 
-# print middle finger emoji
-midfin () {
-	# f09f9695 is utf-8 hex code for this emoji
-	# 0a is ascii/utf-8 for line feed
-	echo -n "f09f96950a" | xxd -r -p
-}
-
+# source mac specific zsh setting
+# .zshrc_mac_specific should remain private since it contains sensitive info such as IP address
+if [[ -e ~/.zshrc_mac_specific ]]; then
+	source ~/.zshrc_mac_specific
+fi
