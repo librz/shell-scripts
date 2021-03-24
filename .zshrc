@@ -121,7 +121,7 @@ sop () {
 	if [[ $(distro) == "macOS" ]]; then
 		netstat -n -f inet -p tcp | awk 'NR>2{print $4}' | awk -F'.' '{print $NF}' | sort -n | uniq
 	elif [[ $(distro) == "Debian" || $(distro) == "Ubuntu" ]]; then
-		netstat -tln | awk '(NR>2) {print \$4}' | awk -F':' '{print $NF}' | sort -n | uniq
+		netstat -tln | awk '(NR>2) {print $4}' | awk -F':' '{print $NF}' | sort -n | uniq
 	else
 		err "you system is not supported"
 		# dont't use exit here, cause it quit the current shell
