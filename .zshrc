@@ -152,8 +152,8 @@ cool () {
 	echo -n "f09f988e0a" | xxd -r -p
 }
 
-# source mac specific zsh setting
-# .zshrc_mac_specific should remain private since it contains sensitive info such as IP address
-if [[ -e ~/.zshrc_mac_specific ]]; then
-	source ~/.zshrc_mac_specific
+# source local specific zsh setting
+# .zshrc_local should remain private since it contains sensitive info such as IP address
+if [[ -e ~/.zshrc_local ]]; then
+	source ~/.zshrc_local
 fi
