@@ -5,6 +5,7 @@
 # usage: bash <(curl -sL http://realrz.com/shell-scripts/distro.sh)
 
 distro=""
+
 if [[ -e /etc/os-release ]]; then
 	# Linux has /etc/os-release file
 	# shellcheck disable=SC1091

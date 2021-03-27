@@ -69,15 +69,13 @@ alias v='vim'
 alias h='history'
 alias w='which'
 alias bye='exit'
+alias p="ping -c 5"
 
 # long formated ls sort by file size
 alias lls="ls -alhS"
 
 # gh for go home
 alias gh="cd ~"
-
-# p5 for ping 5 times
-alias p5="ping -c 5"
 
 # pubip & myip for public ip address
 # ifconfig.me & ident.me both provide this type of service
@@ -89,7 +87,7 @@ alias myip="curl ident.me"
 alias sac="git add . && git commit -m"
 
 # gs: git status
-alias gs="git fetch && git status"
+alias gs="git status"
 # -------- end of git related ------
 
 # mcd for mkdir && cd
