@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# run this script whenever setting up a new machine
-# it supports Debian/Ubuntu, macOS & FreeBSD
+# linux init script, run this to set up and config the system
+# it supports Debian/Ubuntu, macOS 
 # usage: bash <(curl -sL http://realrz.com/shell-scripts/init.sh)
 
 # if you want the latest configs, just run this script again after it's updated
@@ -14,7 +14,6 @@ function err {
 if ! distro=$(bash <(curl -sL http://realrz.com/shell-scripts/distro.sh)); then
 	exit 1
 fi
-
 echo "You are running: $distro"
 
 # install common softwares
@@ -69,4 +68,4 @@ if [[ "$distro" != "macOS" ]]; then
 	service sshd restart
 fi
 
-echo "some of these changes require re-login to be effective"
+echo "some of these changes may require re-login to be effective"
