@@ -4,6 +4,8 @@
 # it supports Debian/Ubuntu, macOS & FreeBSD
 # usage: bash <(curl -sL http://realrz.com/shell-scripts/init.sh)
 
+# if you want the latest configs, just run this script again after it's updated
+
 function err {
 	echo "$1" >&2
 }
@@ -24,16 +26,7 @@ if [[ "$distro" == "Debian" || "$distro" == "Ubuntu" ]]; then
 		err "apt install failed"
 		exit 2
 	fi
-elif [[ "$distro" == "FreeBSD" ]]; then
-	pkg update
-	# tldr, net-tools, dnsutils are not aviailable in freebsd
-	if yes | pkg install zsh vim git curl tree nmap xxd; then
-		echo "pkg instal succeeded"
-	else
-		err "pkg install failed"
-		exit 2
-	fi
-else 
+else
 	# distro is macOS
 	echo "use homebrew to manually install softwares on macOS"
 fi
