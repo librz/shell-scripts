@@ -90,6 +90,9 @@ alias sac="git add . && git commit -m"
 alias gs="git status"
 # -------- end of git related ------
 
+# update configs
+alias uc="bash <(curl -sL http://realrz.com/shell-scripts/init.sh)"
+
 # mcd for mkdir && cd
 mcd() {
 	mkdir "$1" && cd "$1" || return
