@@ -3,9 +3,15 @@
 # gsync: git sync
 # aim: bidirectional sync between local and remote git repo
 
-branch="main"
+if ! branch=$(git branch --show-current); then
+	exit 1
+fi
 
-if [[ -z "$1" ]]; then
+if [[ -n "$1" ]]; then
+	if [[ ! $(git branch --list) =~ $1 ]]; then
+		echo "branch $1 doesn't exit"
+		exit 2
+	fi
 	branch="$1"
 fi
 
