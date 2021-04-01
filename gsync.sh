@@ -42,8 +42,7 @@ elif [[ "$status" =~ diverged ]]; then
 		exit 6
 	fi
 elif [[ "$status" =~ 'up to date' ]]; then
-	echo "You branch is up to date with origin/$branch"
-	exit 0
+	echo "You branch is already up to date with origin/$branch"
 else
 	echo "An unknown error occured, check the script you are running"
 	exit 7
