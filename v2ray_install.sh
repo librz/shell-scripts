@@ -17,7 +17,7 @@ if [[ $answer != "Y" ]] && [[ $answer != "y" ]]; then
 	exit 1
 fi
 
-atp update
+apt update
 
 # get domain
 read -p "请输入域名: " -r domain
