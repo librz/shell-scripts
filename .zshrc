@@ -125,7 +125,7 @@ sop () {
 		netstat -tln | awk '(NR>2) {print $4}' | awk -F':' '{print $NF}' | sort -n | uniq
 	else
 		err "you system is not supported"
-		# dont't use exit here, cause it quit the current shell
+		# dont't use exit here, it quit the current shell
 	fi
 }
 
@@ -147,8 +147,8 @@ hex () {
 }
 
 # print out cool emoji 
-cool () {
-	# f09f988e is utf-8 hex code for emoji(smiling face with sunglasses)
+smile () {
+	# f09f988e is utf-8 hex for emoji(smiling face with sunglasses)
 	# 0a is ascii/utf-8 for line feed
 	echo -n "f09f988e0a" | xxd -r -p
 }
@@ -157,4 +157,9 @@ cool () {
 # .zshrc_local should remain private since it contains sensitive info such as IP address
 if [[ -e ~/.zshrc_local ]]; then
 	source ~/.zshrc_local
+fi
+
+# source local bash zsh setting
+if [[ -e ~/.bashrc_local ]]; then
+	source ~/.bashrc_local
 fi
