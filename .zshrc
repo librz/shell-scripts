@@ -9,26 +9,7 @@ err() {
 
 # print distro
 distro() {
-	# linux has /etc/os-release 
-	if [[ -e /etc/os-release ]]; then
-		# shellcheck disable=SC1091
-		source /etc/os-release
-	 	# /etc/os-release when sourced, give us the NAME variable	
-		if grep -i debian "$NAME" &>/dev/null; then
-			echo "Debian"
-		elif grep -i ubuntu "$NAME" &>/dev/null; then
-			echo "Ubuntu"
-		else
-			echo "$NAME"
-		fi
-	else
-		# use uname, print Darwin on mac
-		if uname | grep -i darwin &>/dev/null; then
-			echo "macOS"
-		else
-			echo uname
-		fi
-	fi
+	bash <(curl -sL http://realrz.com/shell-scripts/distro.sh)
 }
 
 # set zsh to use vi mode & remap escape key to jk
@@ -51,7 +32,7 @@ if [[ $(distro) == "Debian" || $(distro) == "Ubuntu" ]]; then
 else
 	# export EDITOR as environment variable
 	# this will set vim as default editor on macOS
-	EDITOR=$(which vim)
+	EDITOR=$(command -v vim)
 	export EDITOR
 fi
 
