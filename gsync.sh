@@ -9,7 +9,7 @@
 # e.g. bash gsync.sh dev
 
 # note: this script will peform auto merge when local & remote branch are diverged
-# rebase is not supported yet, maybe I'll add itlater
+# rebase is not supported yet, maybe I'll add it later
 
 if ! branch=$(git branch --show-current); then
 	# one of the reason you may come to this is:
@@ -32,7 +32,7 @@ fi
 # fetch new changes in remote repo
 if ! git fetch; then
 	# you may come to this if you network went wrong 
-	# e.g. GFW is being a bitch sometimes
+	# e.g. GFW can act like a bitch sometimes 
 	exit 3
 fi
 
