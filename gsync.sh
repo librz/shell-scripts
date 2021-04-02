@@ -29,26 +29,29 @@ if [[ -n "$1" ]]; then
 	fi
 fi
 
+# fetch new changes in remote repo
 if ! git fetch; then
+	# you may come to this if you network went wrong 
+	# e.g. GFW is being a bitch sometimes
 	exit 3
 fi
 
 status=$(git status)
 
 if [[ "$status" =~ ahead ]]; then
-	echo "** Pushing local changes to origin/main **"
+	echo "** Pushing local changes to origin/$branch **"
 	if ! git push; then
 		exit 4
 	fi
 elif [[ "$status" =~ behind ]]; then
-	echo "** Pulling remote changes from origin/main **"
+	echo "** Pulling remote changes from origin/$branch **"
 	if ! git merge origin/"$branch" --ff-only; then
 		exit 5
 	fi
 elif [[ "$status" =~ diverged ]]; then
 	# try to perform auto merge
 	if git merge origin/"$branch" --no-edit; then
-		echo "** Pushing changes to origin/main after successful merge **"
+		echo "** Pushing changes to origin/$branch after successful merge **"
 		if ! git push; then
 			exit 4
 		fi
