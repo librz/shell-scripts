@@ -7,27 +7,27 @@ err() {
 	echo "$1" >&2
 }
 
-# print distro
-distro() {
-	bash <(curl -sL http://realrz.com/shell-scripts/distro.sh)
-}
+# global variable distro
+distro=$(bash <(curl -sL http://realrz.com/shell-scripts/distro.sh))
 
-# set zsh to use vi mode & remap escape key to jk
-bindkey -v
-bindkey jk vi-cmd-mode
+# you can't do those things if using Windows
+if [[ "$distro" != "Windows" ]]; then
+	# set zsh to use vi mode & remap escape key to jk
+	bindkey -v
+	bindkey jk vi-cmd-mode
+	# nice simple colored prompt
+	export PS1="%10F%m%f:%11F%1~%f \$ "
+fi
 
-# nice simple colored prompt
-export PS1="%10F%m%f:%11F%1~%f \$ "
-
-# set terminal tab-width to be 4 columns 
-tabs -4
+# set terminal tab-width to be 2 columns 
+tabs -2
 
 # locale setting
 export LC_ALL="en_US.UTF-8"
 export LANG="zh_CN.UTF-8"
 
 # set vim as default editor
-if [[ $(distro) == "Debian" || $(distro) == "Ubuntu" ]]; then
+if [[ "$distro" == "Debian" || "$distro" == "Ubuntu" ]]; then
 	update-alternatives --set editor /usr/bin/vim.basic
 else
 	# export EDITOR as environment variable
@@ -81,7 +81,7 @@ mcd() {
 
 # today in format "YYYY-MM-DD"
 today () {
-	if [[ $(distro) == "macOS" ]]; then
+	if [[ "$distro" == "macOS" ]]; then
 		date "+%Y-%m-%d"
 	else
 		date --rfc-3339=date
@@ -90,7 +90,7 @@ today () {
 
 # how much disk space is left
 space () {
-	if [[ $(distro) == "macOS" ]]; then
+	if [[ "$distro" == "macOS" ]]; then
 		err "macOS is not supported"
 	else
 		df -h | awk '($6=="/"){print $5, "of", $2, "is used"}'
@@ -100,9 +100,9 @@ space () {
 # sop: scan open port
 sop () {
 	# netstat works very differently in Linux & BSD based systems such as macOS
-	if [[ $(distro) == "macOS" ]]; then
+	if [[ "$distro" == "macOS" ]]; then
 		netstat -n -f inet -p tcp | awk 'NR>2{print $4}' | awk -F'.' '{print $NF}' | sort -n | uniq
-	elif [[ $(distro) == "Debian" || $(distro) == "Ubuntu" ]]; then
+	elif [[ "$distro" == "Debian" || "$distro" == "Ubuntu" ]]; then
 		netstat -tln | awk '(NR>2) {print $4}' | awk -F':' '{print $NF}' | sort -n | uniq
 	else
 		err "you system is not supported"
@@ -144,3 +144,6 @@ fi
 if [[ -e ~/.bashrc_local ]]; then
 	source ~/.bashrc_local
 fi
+
+# cd into home folder
+cd ~
