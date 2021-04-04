@@ -43,6 +43,8 @@ alias zc='vim ~/.zshrc'
 alias sz="source ~/.zshrc"
 # edit vim config
 alias vc="vim ~/.vimrc"
+# shellcheck
+alias sc="shellcheck --shell=bash"
 
 alias b="cd .."
 alias c='clear'
@@ -71,8 +73,8 @@ alias sac="git add . && git commit -m"
 alias gs="git status"
 # -------- end of git related ------
 
-# update configs
-alias uc="bash <(curl -sL http://realrz.com/shell-scripts/init.sh)"
+# cs: config system 
+alias cs="bash <(curl -sL http://realrz.com/shell-scripts/init.sh)"
 
 # mcd for mkdir && cd
 mcd() {
@@ -146,4 +148,4 @@ if [[ -e ~/.bashrc_local ]]; then
 fi
 
 # cd into home folder
-cd ~
+cd ~ || exit
