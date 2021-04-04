@@ -11,15 +11,15 @@ if [[ -e /etc/os-release ]]; then
 	# shellcheck disable=SC1091
 	source /etc/os-release
 	# /etc/os-release when sourced, will add the $NAME environment variable
-	if echo "$NAME" | grep -i debian &>/dev/null; then
+	if echo "$NAME" | grep -iq debian; then
 		distro="Debian"
-	elif echo "$NAME" | grep -i ubuntu &>/dev/null; then
+	elif echo "$NAME" | grep -iq ubuntu; then
 		distro="Ubuntu"
 	fi
 elif [[ $(uname) == "Darwin" ]]; then
 	# god knows why Apple names its desktop system macOS starting with a lower case letter
 	distro="macOS"
-elif uname | grep -Ei 'mingw|cygwin' &>/dev/null; then
+elif uname | grep -Eiq 'mingw|cygwin'; then
 	# git bash uses mingw underneath the hood
 	distro="Windows"
 else
