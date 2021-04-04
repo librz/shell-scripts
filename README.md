@@ -12,4 +12,4 @@
 
 由于 raw.githubusercontent.com 国内访问不了，这些文件也被托管在 http://realrz.com/shell-scripts/ 下面
 
-比如要执行 distro.sh, 可以执行: `bash <(curl -sL https://realrz.com/shell-scripts/distro.sh)`
+比如要执行 distro.sh, 可以执行: `bash <(curl -sL http://realrz.com/shell-scripts/distro.sh)`
