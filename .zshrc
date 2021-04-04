@@ -43,16 +43,12 @@ alias zc='vim ~/.zshrc'
 alias sz="source ~/.zshrc"
 # edit vim config
 alias vc="vim ~/.vimrc"
-# shellcheck
-alias sc="shellcheck --shell=bash"
 
 alias b="cd .."
 alias c='clear'
 alias v='vim'
-alias h='history'
-alias w='which'
 alias bye='exit'
-alias p="ping -c 5"
+alias sc="shellcheck --shell=bash"
 
 # long formated ls sort by file size
 alias lls="ls -alhS"
