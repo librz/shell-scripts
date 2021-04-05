@@ -1,7 +1,3 @@
-#!/bin/zsh
-
-# zsh is not supported by shellcheck, force it: shellcheck --shell=bash ~/.zshrc
-
 # print error to stderr
 err() {
 	echo "$1" >&2
@@ -10,7 +6,7 @@ err() {
 # global variable distro
 distro=$(bash <(curl -sL http://realrz.com/shell-scripts/distro.sh))
 
-# you can't do those things if using Windows
+# on my Windows machine I'm still using bash instead of zsh 
 if [[ "$distro" != "Windows" ]]; then
 	# set zsh to use vi mode & remap escape key to jk
 	bindkey -v
@@ -88,7 +84,7 @@ today () {
 
 # how much disk space is left
 space () {
-	if [[ "$distro" == "macOS" ]]; then
+	if [[ "$distro" == "macOS" || "$distro" == "Windows" ]]; then
 		err "macOS is not supported"
 	else
 		df -h | awk '($6=="/"){print $5, "of", $2, "is used"}'

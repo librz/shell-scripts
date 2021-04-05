@@ -1,4 +1,5 @@
 ### bash 写的一些小工具，安装配置脚本之类
+### 关联 repo: [how-to-bash](https://github.com/librz/how-to-bash)
 
 #### 获取代码
 
