@@ -1,0 +1,42 @@
+# mac only settings 
+
+vol () {
+	osascript -e "set volume output volume $1"
+}
+
+notify () {
+	osascript -e "display notification \"$2\" with title \"$1\""
+}
+
+et () {
+	osascript -e 'tell app "Finder" to empty trash'
+}
+
+trash () {
+	file="$1"
+	# in order to operate inside ~/.Trash
+	# you'd have to give your Terminal app Full Disk Access in Security & Privacy
+	mv "$file" ~/.Trash
+}
+
+# open application
+oa () {
+	appPath="/Applications"
+	appName=$(ls "$appPath" | grep -i "$1")
+	if [[ -z "$appName" ]]; then
+		# apps comes with macOS is located in /System/Applications
+		appPath="/System/Applications"
+		appName=$(ls "$appPath" | grep -i "$1")
+		if [[ -z "$appName" ]]; then
+			echo "$appPath/$appName"
+			err "no app mathes the name $1"
+			return
+		fi
+	fi
+	open "$appPath/$appName"
+}
+
+# quit application
+qa () {
+	osascript -e "tell app \"$1\" to quit"
+}
