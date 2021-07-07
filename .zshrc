@@ -4,7 +4,23 @@ err() {
 }
 
 # global variable distro
-distro=$(bash <(curl -sL http://realrz.com/shell-scripts/distro.sh))
+distro="Ubuntu"
+if [[ -e /etc/os-release ]]; then
+	# Linux has /etc/os-release file
+	# shellcheck disable=SC1091
+	source /etc/os-release
+	# /etc/os-release when sourced, will add the $NAME environment variable
+	if echo "$NAME" | grep -iq debian; then
+		distro="Debian"
+	elif echo "$NAME" | grep -iq ubuntu; then
+		distro="Ubuntu"
+	fi
+elif [[ $(uname) == "Darwin" ]]; then
+	distro="macOS"
+else
+	err "Sorry, this script only support Debian/Ubuntu & macOS"
+fi
+
 
 # set zsh to use vi mode & remap escape key to jk
 bindkey -v
@@ -29,7 +45,7 @@ else
 	export EDITOR
 fi
 
-# ---- below are handy aliases and functions ----
+# ---- aliases and functions ----
 
 # cs: config system 
 alias cs="bash <(curl -sL http://realrz.com/shell-scripts/init.sh)"
@@ -37,6 +53,8 @@ alias cs="bash <(curl -sL http://realrz.com/shell-scripts/init.sh)"
 # edit/source zsh config
 alias zc='vim ~/.zshrc'
 alias sz="source ~/.zshrc"
+# edit vim config
+alias vc="vim ~/.vimrc"
 
 alias b="cd .."
 alias c='clear'
@@ -54,7 +72,6 @@ alias gh="cd ~"
 # ifconfig.me & ident.me both provide this type of service
 alias pubip="curl ifconfig.me"
 alias myip="curl ident.me"
-
 
 # -------- git related ---------
 
@@ -75,6 +92,13 @@ alias gp="git push"
 
 # gm: git merge
 alias gm="git merge"
+
+# nb: new branch from upstream/master
+function nb () {
+	git fetch upstream
+	git checkout upstream/master
+	git checkout -b "$1"
+}
 
 # -------- end of git related ------
 
@@ -98,7 +122,7 @@ space () {
 	if [[ "$distro" == "macOS" ]]; then
 		df -H | awk '($9=="/"){print $3, "of", $2, "is used"}'
 	else
-		df -h | awk '($6=="/"){print $5, "of", $2, "is used"}'
+		df -H | awk '($6=="/"){print $5, "of", $2, "is used"}'
 	fi
 }
 
@@ -132,13 +156,12 @@ smile () {
 	echo -n "f09f988e0a" | xxd -r -p
 }
 
-# source local specific zsh setting
-# .zshrc_local should remain private since it contains sensitive info such as IP address
-if [[ -e ~/.zshrc_local ]]; then
-	source ~/.zshrc_local
+# mac specific settins
+if [[ -e ~/.zshrc_mac ]]; then
+	source ~/.zshrc_mac
 fi
 
-# source local bash zsh setting
-if [[ -e ~/.bashrc_local ]]; then
-	source ~/.bashrc_local
+# private settings, DO NOT make it public
+if [[ -e ~/.zshrc_private ]]; then
+	source ~/.zshrc_private
 fi
