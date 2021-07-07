@@ -6,14 +6,11 @@ err() {
 # global variable distro
 distro=$(bash <(curl -sL http://realrz.com/shell-scripts/distro.sh))
 
-# on my Windows machine I'm still using bash instead of zsh 
-if [[ "$distro" != "Windows" ]]; then
-	# set zsh to use vi mode & remap escape key to jk
-	bindkey -v
-	bindkey jk vi-cmd-mode
-	# nice simple colored prompt
-	export PS1="%10F%m%f:%11F%1~%f \$ "
-fi
+# set zsh to use vi mode & remap escape key to jk
+bindkey -v
+bindkey jk vi-cmd-mode
+# nice simple colored prompt
+export PS1="%10F%m%f:%11F%1~%f \$ "
 
 # set terminal tab-width to be 2 columns 
 tabs -2
@@ -34,11 +31,12 @@ fi
 
 # ---- below are handy aliases and functions ----
 
+# cs: config system 
+alias cs="bash <(curl -sL http://realrz.com/shell-scripts/init.sh)"
+
 # edit/source zsh config
 alias zc='vim ~/.zshrc'
 alias sz="source ~/.zshrc"
-# edit vim config
-alias vc="vim ~/.vimrc"
 
 alias b="cd .."
 alias c='clear'
@@ -57,16 +55,29 @@ alias gh="cd ~"
 alias pubip="curl ifconfig.me"
 alias myip="curl ident.me"
 
+
 # -------- git related ---------
+
 # sac: stage all changes and commit
 alias sac="git add . && git commit -m"
 
 # gs: git status
 alias gs="git status"
+
+# gb: git branch
+alias gb="git branch"
+
+# gc: git checkout
+alias gc="git checkout"
+
+# gp: git push
+alias gp="git push"
+
+# gm: git merge
+alias gm="git merge"
+
 # -------- end of git related ------
 
-# cs: config system 
-alias cs="bash <(curl -sL http://realrz.com/shell-scripts/init.sh)"
 
 # mcd for mkdir && cd
 mcd() {
@@ -84,8 +95,8 @@ today () {
 
 # how much disk space is left
 space () {
-	if [[ "$distro" == "macOS" || "$distro" == "Windows" ]]; then
-		err "macOS is not supported"
+	if [[ "$distro" == "macOS" ]]; then
+		df -H | awk '($9=="/"){print $3, "of", $2, "is used"}'
 	else
 		df -h | awk '($6=="/"){print $5, "of", $2, "is used"}'
 	fi
@@ -93,15 +104,8 @@ space () {
 
 # sop: scan open port
 sop () {
-	# netstat works very differently in Linux & BSD based systems such as macOS
-	if [[ "$distro" == "macOS" ]]; then
-		netstat -n -f inet -p tcp | awk 'NR>2{print $4}' | awk -F'.' '{print $NF}' | sort -n | uniq
-	elif [[ "$distro" == "Debian" || "$distro" == "Ubuntu" ]]; then
-		netstat -tln | awk '(NR>2) {print $4}' | awk -F':' '{print $NF}' | sort -n | uniq
-	else
-		err "you system is not supported"
-		# dont't use exit here, it quit the current shell
-	fi
+	# although you could use netstat or ss, they work differently between macOS & linux
+	nmap localhost | grep "/tcp" | awk -F'/' '{print $1}'
 }
 
 # 3p: program, pid, port
@@ -138,6 +142,3 @@ fi
 if [[ -e ~/.bashrc_local ]]; then
 	source ~/.bashrc_local
 fi
-
-# cd into home folder
-cd ~ || exit
