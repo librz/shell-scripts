@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # get distro
-# supported distros: Debian, Ubuntu, macOS, Windows(mingw & cygwin)
+# supported distros: Debian, Ubuntu, macOS
 # usage: bash <(curl -sL http://realrz.com/shell-scripts/distro.sh)
 
 distro=""
@@ -19,11 +19,8 @@ if [[ -e /etc/os-release ]]; then
 elif [[ $(uname) == "Darwin" ]]; then
 	# god knows why Apple names its desktop system macOS starting with a lower case letter
 	distro="macOS"
-elif uname | grep -Eiq 'mingw|cygwin'; then
-	# git bash uses mingw underneath the hood
-	distro="Windows"
 else
-	echo "Sorry, this script only support Debian/Ubuntu, macOS & Windows"
+	echo "Sorry, this script only support Debian/Ubuntu & macOS"
 	exit 1
 fi
 
