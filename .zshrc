@@ -72,6 +72,8 @@ alias gh="cd ~"
 # ifconfig.me & ident.me both provide this type of service
 alias pubip="curl ifconfig.me"
 alias myip="curl ident.me"
+# if you are inside gfw
+alias gfwip="curl http://pv.sohu.com/cityjson"
 
 # -------- git related ---------
 
