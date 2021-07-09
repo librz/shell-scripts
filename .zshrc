@@ -74,6 +74,7 @@ alias pubip="curl ifconfig.me"
 alias myip="curl ident.me"
 # if you are inside gfw
 alias gfwip="curl http://pv.sohu.com/cityjson"
+alias wallip="curl curl https://api.myip.com"
 
 # -------- git related ---------
 
