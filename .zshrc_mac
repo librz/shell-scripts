@@ -40,3 +40,12 @@ oa () {
 qa () {
 	osascript -e "tell app \"$1\" to quit"
 }
+
+# li: list interfaces
+alias li="networksetup -listallhardwareports"
+
+# wifi: print out private ip address is wifi is connected
+wifi () {
+	local intf=$(networksetup -listallhardwareports | awk '/Wi-Fi/{getline; print $2}')
+	ipconfig getifaddr "$intf"
+}
