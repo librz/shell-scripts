@@ -87,7 +87,7 @@ echo "success"
 
 echo
 
-if [[ "$distro" != "macOS" && "$distro" != "Windows"]]; then
+if [[ "$distro" != "macOS" && "$distro" != "Windows" ]]; then
 	# change sshd port to 9000, set ClientAliveInterval to 5 seconds
 	# different ISO providers may have different sshd_config, so this may not work
 	sed -i 's/#Port 22/Port 9000/g' /etc/ssh/sshd_config
