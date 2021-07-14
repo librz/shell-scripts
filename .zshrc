@@ -131,7 +131,7 @@ space () {
 			}
 		}
 		$mountedIndex=="/" {
-			print $availIndex, "of", $sizeIndex, "is used"
+			print $availIndex, "of", $sizeIndex, "is available"
 		}
 	'
 }
