@@ -11,7 +11,7 @@ function err {
 }
 
 function header {
-	echo "** $1 **"
+	echo -e "\n** $1 **\n"
 }
 
 # check distro
@@ -20,8 +20,6 @@ if ! distro=$(bash <(curl -sL http://realrz.com/shell-scripts/distro.sh)); then
 	exit 1
 fi
 echo "You are running: $distro"
-
-echo
 
 # install softwares
 header "installing common softwares"
@@ -37,8 +35,6 @@ elif [[ "$distro" == "macOS" ]]; then
 elif [[ "$distro" == "Windows" ]]; then
 	echo "please use scoop to manually install softwares on Windows"
 fi
-
-echo
 
 # language-pack-zh-hans is only aviailable in ubuntu 
 if [[ "$distro" = "Ubuntu" ]]; then
@@ -64,28 +60,20 @@ if [[ "$distro" != "Windows" ]]; then
 	fi
 fi
 
-echo
-
 header "setting timezone to Asia/Shanghai"
 if ! diff /usr/share/zoneinfo/Asia/Shanghai /etc/localtime; then
 	cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 fi
 echo "success"
 
-echo
-
 header "installing vim-plug"
 curl -sfLo ~/.vim/autoload/plug.vim --create-dirs http://realrz.com/shell-scripts/plug.vim
 echo "success"
-
-echo
 
 header "configuring .vimrc & .zshrc"
 curl -sL http://realrz.com/shell-scripts/.vimrc > ~/.vimrc
 curl -sL http://realrz.com/shell-scripts/.zshrc > ~/.zshrc
 echo "success"
-
-echo
 
 if [[ "$distro" != "macOS" && "$distro" != "Windows" ]]; then
 	# change sshd port to 9000, set ClientAliveInterval to 5 seconds
