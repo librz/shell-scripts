@@ -22,8 +22,8 @@ fi
 echo "You are running: $distro"
 
 # auto remove
-
-yes | apt autoremove &>/dev/null
+header "Removing unnecessary pacakges using apt autoremove"
+yes | apt autoremove
 
 # install softwares
 header "Installing Common Software Packages"
@@ -72,8 +72,10 @@ echo "success"
 
 header "Configuring .vimrc & .zshrc"
 curl -sL http://realrz.com/shell-scripts/.vimrc > ~/.vimrc
+&&
 curl -sL http://realrz.com/shell-scripts/.zshrc > ~/.zshrc
-echo "success"
+&&
+echo ".vimrc & .zshrc is in place"
 
 if [[ "$distro" != "macOS" ]]; then
 	# change sshd port to 9000, set ClientAliveInterval to 5 seconds
@@ -83,4 +85,4 @@ if [[ "$distro" != "macOS" ]]; then
 	service sshd restart
 fi
 
-echo "System Config Finished, You Can Source It Now, Some Changes May Require re-login to be Effective"
+header "System Config Finished, You Can Source It Now, Some Changes May Require re-login to be Effective"
