@@ -122,11 +122,18 @@ today () {
 
 # how much disk space is left
 space () {
-	if [[ "$distro" == "macOS" ]]; then
-		df -H | awk '($9=="/"){print $3, "of", $2, "is used"}'
-	else
-		df -H | awk '($6=="/"){print $5, "of", $2, "is used"}'
-	fi
+	df -H | awk '
+		NR==1 {
+			for (i=1; i<=NF; i++) {
+				if ($i == "Size") sizeIndex = i
+				if ($i == "Avail") availIndex = i
+				if ($i == "Mounted") mountedIndex = i
+			}
+		}
+		$mountedIndex=="/" {
+			print $availIndex, "of", $sizeIndex, "is used"
+		}
+	'
 }
 
 # sop: scan open port
