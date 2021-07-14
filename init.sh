@@ -43,7 +43,7 @@ fi
 if [[ "$distro" = "Ubuntu" ]]; then
 	header "Installing language-pack-zh-hans"
 	# also install language-pack-zh-hans
-	yes | apt install language-pack-zh-hans && echo "language-pack-zh-hans install success"
+	yes | apt install language-pack-zh-hans && echo "success"
 fi
 
 # add zsh to /etc/shells if it's not there
@@ -54,7 +54,7 @@ fi
 # change login shell to zsh
 header "Changing Login Shell to zsh"
 if chsh -s "$(command -v zsh)"; then
-	echo "login shell is changed to zsh"
+	echo "success"
 else
 	err "failed to change login shell to zsh"
 	exit 3
@@ -62,9 +62,8 @@ fi
 
 header "Setting Timezone to Asia/Shanghai"
 if ! diff /usr/share/zoneinfo/Asia/Shanghai /etc/localtime; then
-	cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+	cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo "success"
 fi
-echo "success"
 
 header "Installing vim-plug"
 curl -sfLo ~/.vim/autoload/plug.vim --create-dirs http://realrz.com/shell-scripts/plug.vim
@@ -72,10 +71,8 @@ echo "success"
 
 header "Configuring .vimrc & .zshrc"
 curl -sL http://realrz.com/shell-scripts/.vimrc > ~/.vimrc
-&&
 curl -sL http://realrz.com/shell-scripts/.zshrc > ~/.zshrc
-&&
-echo ".vimrc & .zshrc is in place"
+echo "success"
 
 if [[ "$distro" != "macOS" ]]; then
 	# change sshd port to 9000, set ClientAliveInterval to 5 seconds
