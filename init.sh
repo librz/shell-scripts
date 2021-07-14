@@ -15,14 +15,18 @@ function header {
 }
 
 # check distro
-header "checking distro"
+header "Checking Distro"
 if ! distro=$(bash <(curl -sL http://realrz.com/shell-scripts/distro.sh)); then
 	exit 1
 fi
 echo "You are running: $distro"
 
+# auto remove
+
+apt autoremove &>/dev/null
+
 # install softwares
-header "installing common softwares"
+header "Installing Common Software Packages"
 if [[ "$distro" == "Debian" || "$distro" == "Ubuntu" ]]; then
 	if apt update &>/dev/null && yes | apt install zsh vim git snapd curl tldr tree xxd net-tools nmap dnsutils; then
 		echo "success"
@@ -30,18 +34,16 @@ if [[ "$distro" == "Debian" || "$distro" == "Ubuntu" ]]; then
 		err "apt install failed"
 		exit 2
 	fi
-elif [[ "$distro" == "macOS" ]]; then
+else
+	# macOS
 	echo "please use homebrew to manually install softwares on macOS"
-elif [[ "$distro" == "Windows" ]]; then
-	echo "please use scoop to manually install softwares on Windows"
 fi
 
 # language-pack-zh-hans is only aviailable in ubuntu 
 if [[ "$distro" = "Ubuntu" ]]; then
-	header "installing language-pack-zh-hans"
+	header "Installing language-pack-zh-hans"
 	# also install language-pack-zh-hans
-	yes | apt install language-pack-zh-hans
-	echo "success"
+	yes | apt install language-pack-zh-hans && echo "language-pack-zh-hans install success"
 fi
 
 # add zsh to /etc/shells if it's not there
@@ -50,32 +52,30 @@ if ! grep -q zsh /etc/shells; then
 fi
 
 # change login shell to zsh
-if [[ "$distro" != "Windows" ]]; then
-	header "Changing login shell to zsh"
-	if chsh -s "$(command -v zsh)"; then
-		echo "login shell is changed to zsh"
-	else
-		err "failed to change login shell to zsh"
-		exit 3
-	fi
+header "Changing Login Shell to zsh"
+if chsh -s "$(command -v zsh)"; then
+	echo "login shell is changed to zsh"
+else
+	err "failed to change login shell to zsh"
+	exit 3
 fi
 
-header "setting timezone to Asia/Shanghai"
+header "Setting Timezone to Asia/Shanghai"
 if ! diff /usr/share/zoneinfo/Asia/Shanghai /etc/localtime; then
 	cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 fi
 echo "success"
 
-header "installing vim-plug"
+header "Installing vim-plug"
 curl -sfLo ~/.vim/autoload/plug.vim --create-dirs http://realrz.com/shell-scripts/plug.vim
 echo "success"
 
-header "configuring .vimrc & .zshrc"
+header "Configuring .vimrc & .zshrc"
 curl -sL http://realrz.com/shell-scripts/.vimrc > ~/.vimrc
 curl -sL http://realrz.com/shell-scripts/.zshrc > ~/.zshrc
 echo "success"
 
-if [[ "$distro" != "macOS" && "$distro" != "Windows" ]]; then
+if [[ "$distro" != "macOS" ]]; then
 	# change sshd port to 9000, set ClientAliveInterval to 5 seconds
 	# different ISO providers may have different sshd_config, so this may not work
 	sed -i 's/#Port 22/Port 9000/g' /etc/ssh/sshd_config
@@ -83,4 +83,4 @@ if [[ "$distro" != "macOS" && "$distro" != "Windows" ]]; then
 	service sshd restart
 fi
 
-echo "system config finished, you can source it now, some changes may require re-login to be effective"
+echo "System Config Finished, You Can Source It Now, Some Changes May Require re-login to be Effective"
