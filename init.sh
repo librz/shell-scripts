@@ -95,6 +95,4 @@ if [[ "$distro" != "macOS" && "$distro" != "Windows" ]]; then
 	service sshd restart
 fi
 
-echo
-
-echo "system config finished, some changes may require re-login to be effective"
+echo "system config finished, you can source it now, some changes may require re-login to be effective"
