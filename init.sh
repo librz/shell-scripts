@@ -23,7 +23,7 @@ echo "You are running: $distro"
 
 # auto remove
 
-apt autoremove &>/dev/null
+yes | apt autoremove &>/dev/null
 
 # install softwares
 header "Installing Common Software Packages"
