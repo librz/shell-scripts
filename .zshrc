@@ -85,7 +85,7 @@ alias sac="git add . && git commit -m"
 alias gs="git status"
 
 # gl: formatted git log, placeholder starts with % sign, see: https://git-scm.com/docs/git-log
-alias gl='git log --pretty="%Cgreen%h %Creset%ae %as %Cgreen<%s>"'
+alias gl='git log --pretty="%Cgreen%h %Creset%ae %as %C(cyan)<%s>"'
 
 # gb: git branch
 alias gb="git branch"
