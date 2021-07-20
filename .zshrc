@@ -4,7 +4,7 @@ err() {
 }
 
 # global variable distro
-distro="Ubuntu"
+distro=""
 if [[ -e /etc/os-release ]]; then
 	# Linux has /etc/os-release file
 	# shellcheck disable=SC1091
@@ -63,7 +63,7 @@ alias bye='exit'
 alias sc="shellcheck --shell=bash"
 
 # long formated ls sort by file size
-alias lls="ls -alhS"
+alias lls="ls -AlhS"
 
 # gh for go home
 alias gh="cd ~"
