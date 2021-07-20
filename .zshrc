@@ -84,6 +84,9 @@ alias sac="git add . && git commit -m"
 # gs: git status
 alias gs="git status"
 
+# gl: git log with short commit id
+alias gl="git log --abbrev-commit"
+
 # gb: git branch
 alias gb="git branch"
 
