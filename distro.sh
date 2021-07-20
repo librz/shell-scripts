@@ -17,7 +17,6 @@ if [[ -e /etc/os-release ]]; then
 		distro="Ubuntu"
 	fi
 elif [[ $(uname) == "Darwin" ]]; then
-	# god knows why Apple names its desktop system macOS starting with a lower case letter
 	distro="macOS"
 else
 	echo "Sorry, this script only support Debian/Ubuntu & macOS"
