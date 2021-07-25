@@ -10,8 +10,12 @@ set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
 set termencoding=utf-8
 set encoding=utf-8
 
-" remap esc to jk 
+" remap esc to jk in insert mode
 imap jk <Esc>
+" remap ^  to ss in normal mode
+nmap ss ^
+" remap $ to ee in normal mode
+nmap ee $
 
 " vim-plug section
 call plug#begin('~/.vim/plugged')
