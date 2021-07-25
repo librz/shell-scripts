@@ -47,6 +47,8 @@ else
 	export EDITOR
 fi
 
+setopt autocd # change directory just by typing its name
+
 # ---- aliases and functions ----
 
 # cs: config system 
