@@ -14,6 +14,8 @@ if [[ -e /etc/os-release ]]; then
 		distro="Debian"
 	elif echo "$NAME" | grep -iq ubuntu; then
 		distro="Ubuntu"
+	elif echo "$NAME" | grep -iq kali; then
+		distro="Kali"
 	fi
 elif [[ $(uname) == "Darwin" ]]; then
 	distro="macOS"
