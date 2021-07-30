@@ -1,16 +1,18 @@
-### bash 写的一些小工具，安装配置脚本之类
-### 关联 repo: [how-to-bash](https://github.com/librz/how-to-bash)
+### scripts & tools written in bash
+### related repo: [how-to-bash](https://github.com/librz/how-to-bash)
 
-#### 获取代码
+#### download code
 
 `git clone https://github.com/librz/shell-scripts.git`
 
-#### 执行脚本 (已经 git clone)
+#### run script (local)
 
-如果已经将项目 git clone 到本地，用 `bash /path/to/script` 的方式执行就好了 
+`bash /path/to/script` 
 
-#### 执行脚本 (不需要 git clone)
+some scripts may require sudo access, do it at your own risk
 
-由于 raw.githubusercontent.com 国内访问不了，这些文件也被托管在 http://realrz.com/shell-scripts/ 下面
+#### run script (remote)
 
-比如要执行 distro.sh, 可以执行: `bash <(curl -sL http://realrz.com/shell-scripts/distro.sh)`
+since raw.githubusercontent.com is blocked by YouKnowWho，those files are also hosted under http://realrz.com/shell-scripts/
+
+for example, to run distro.sh, you could do: `bash <(curl -sL http://realrz.com/shell-scripts/distro.sh)`
