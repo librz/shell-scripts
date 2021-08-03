@@ -103,6 +103,9 @@ alias gp="git push"
 # gm: git merge
 alias gm="git merge"
 
+# gds: git diff --shortstat
+alias gds="git diff --shortstat"
+
 # nb: new branch from upstream/master
 function nb () {
 	git fetch upstream
