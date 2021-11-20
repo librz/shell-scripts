@@ -146,6 +146,12 @@ space () {
 	'
 }
 
+# print out directory size
+dirsize () {
+	du -h --max-depth=1 "$1" | tail -1 | awk '{print $1}'
+}
+
+
 # sop: scan open port
 sop () {
 	# although you could use netstat or ss, they work differently between macOS & linux
