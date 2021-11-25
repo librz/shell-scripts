@@ -29,7 +29,7 @@ bindkey -v
 bindkey jk vi-cmd-mode
 # nice simple colored prompt
 # %f means reset color?
-export PS1="%10F%n%f@%12F%m%f%3F:%~%f %10F$%f"
+export PS1="%10F%n%f@%12F%m%f%3F:%~%f %10F$%f "
 
 # set terminal tab-width to be 2 columns 
 tabs -2
