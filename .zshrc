@@ -75,6 +75,7 @@ alias vc="vim ~/.vimrc"
 alias b="cd .."
 alias c='clear'
 alias v='vim'
+alias wh='which'
 alias bye='exit'
 alias sc="shellcheck --shell=bash"
 
@@ -127,6 +128,10 @@ function nb () {
 
 # -------- end of git related ------
 
+# list path (one path per row, sort by path length)
+lpath() {
+	echo "$PATH" | awk -v RS=":" '{print length, $1}' | sort -n -s | awk '{print $2}'
+}
 
 # mcd for mkdir && cd
 mcd() {
