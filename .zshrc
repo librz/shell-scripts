@@ -3,40 +3,51 @@ err() {
 	echo "$1" >&2
 }
 
-# global variable distro
-distro=""
-if [[ -e /etc/os-release ]]; then
-	# Linux has /etc/os-release file
-	# shellcheck disable=SC1091
-	source /etc/os-release
-	# /etc/os-release when sourced, will add the $NAME environment variable
-	if echo "$NAME" | grep -iq debian; then
-		distro="Debian"
-	elif echo "$NAME" | grep -iq ubuntu; then
-		distro="Ubuntu"
-	elif echo "$NAME" | grep -iq kali; then
-		distro="Kali"
-	fi
-elif [[ $(uname) == "Darwin" ]]; then
-	distro="macOS"
-else
-	err "Sorry, this script only support Debian/Ubuntu & macOS"
-fi
+
+# get distro 
+printDistro() {
+  local distro=""
+  if [[ -e /etc/os-release ]]; then
+    # Linux has /etc/os-release file
+    # shellcheck disable=SC1091
+    source /etc/os-release
+    # /etc/os-release when sourced, will add the $NAME environment variable
+    if echo "$NAME" | grep -iq debian; then
+      distro="Debian"
+    elif echo "$NAME" | grep -iq ubuntu; then
+      distro="Ubuntu"
+    elif echo "$NAME" | grep -iq kali; then
+      distro="Kali"
+    fi  
+  elif [[ $(uname) == "Darwin" ]]; then
+    distro="macOS"
+  else
+    err "Sorry, this script only support Debian/Ubuntu & macOS"
+    distro="Unknown"
+  fi  
+
+  echo "$distro"
+}
 
 
 # set zsh to use vi mode & remap escape key to jk
 bindkey -v
 bindkey jk vi-cmd-mode
-# nice simple colored prompt
-# %f means reset color?
-export PS1="%10F%n%f@%12F%m%f%3F:%~%f %10F$%f "
-
 # set terminal tab-width to be 2 columns 
 tabs -2
+
+# ---------- global variables ----------
+
+export distro="$(printDistro)" 
+
+# nice simple colored prompt (%f means reset color?)
+export PS1="%10F%n%f@%12F%m%f%3F:%~%f %10F$%f "
 
 # locale setting
 export LC_ALL="en_US.UTF-8"
 export LANG="zh_CN.UTF-8"
+
+# ---------- end of global variables ----------
 
 # set vim as default editor
 if [[ "$distro" == "Debian" || "$distro" == "Ubuntu" ]]; then
