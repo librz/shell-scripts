@@ -75,8 +75,8 @@ alias vc="vim ~/.vimrc"
 alias b="cd .."
 alias c='clear'
 alias v='vim'
+alias ls='ls --color=auto'
 alias wh='which'
-alias bye='exit'
 alias sc="shellcheck --shell=bash"
 
 # long formated ls sort by file size

@@ -75,11 +75,15 @@ curl -sL http://realrz.com/shell-scripts/.zshrc > ~/.zshrc
 echo "success"
 
 if [[ "$distro" != "macOS" ]]; then
-	# change sshd port to 9000, set ClientAliveInterval to 5 seconds
-	# different ISO providers may have different sshd_config, so this may not work
-	sed -i 's/#Port 22/Port 9000/g' /etc/ssh/sshd_config
-	sed -i 's/#ClientAliveInterval 0/ClientAliveInterval 5/g' /etc/ssh/sshd_config
-	service sshd restart
+	if [[ -f /etc/ssh/sshd_config ]]; then
+		header 'File /etc/ssh/sshd_config exits, chaning sshd port from 22 to 9000'
+		# change sshd port to 9000, set ClientAliveInterval to 5 seconds
+		# different ISO providers may have different sshd_config, so this may not work
+		sed -i 's/#Port 22/Port 9000/g' /etc/ssh/sshd_config
+		sed -i 's/#ClientAliveInterval 0/ClientAliveInterval 5/g' /etc/ssh/sshd_config
+		service sshd restart
+		echo 'success'
+	fi
 fi
 
 header "System Config Finished, You Can Source It Now, Some Changes May Require re-login to be Effective"
