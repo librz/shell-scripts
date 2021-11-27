@@ -119,6 +119,12 @@ alias gm="git merge"
 # gds: git diff --shortstat
 alias gds="git diff --shortstat"
 
+# gdac: git discard all changes
+function gdac () {
+	git clean -df
+	git checkout -- .
+}
+
 # nb: new branch from upstream/master
 function nb () {
 	git fetch upstream
