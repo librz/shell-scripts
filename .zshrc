@@ -205,6 +205,23 @@ smile () {
 	echo -n "f09f988e0a" | xxd -r -p
 }
 
+# ghs: generate html skeleton
+ghs () {
+	local html
+	html=$(
+cat << EOF
+<html>
+	<head>
+		<title></title>
+	</head>
+	<body>
+	</body>
+</html>
+EOF
+)
+	echo "$html"
+}
+
 # mac specific settins
 if [[ -e ~/.zshrc_mac ]]; then
 	source ~/.zshrc_mac
