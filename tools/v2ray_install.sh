@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# bring in utils functions
+for f in ../utils/*.sh;
+do
+	source "$f"
+done
+
 echo "V2ray + tls + nginx + websocket 安装配置脚本"
 
 echo "在运行此脚本之前，以下条件应该被满足："
@@ -7,10 +13,6 @@ echo "1. 系统是 Ubuntu 或者 Debian 并且使用 root 账号登陆"
 echo "2. 系统不在 GFW 封锁范围内"
 echo "3. 系统上没有安装过 certbot"
 echo "4. 已经准备好域名并且 DNS 的 A 记录已经将域名指向本机的IP地址"
-
-err () {
-	echo "$1" >&2
-}
 
 read -p "是否继续? (Y/N) " -r answer
 if [[ $answer != "Y" ]] && [[ $answer != "y" ]]; then

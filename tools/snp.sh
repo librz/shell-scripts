@@ -20,18 +20,24 @@
 # options can be combined, e.g.
 # bash <(curl -sL http://realrz.com/shell-scripts/snp.sh) -rn /path/to/file
 
+# bring in all utils functions
+for f in ../utils/*.sh;
+do
+	source "$f"
+done
+
 # check distro
-if ! distro=$(bash <(curl -sL http://realrz.com/shell-scripts/distro.sh)); then
+if ! distro=$(getDistro); then
 	exit 1
 fi
 
 # check if xxd is installed
 if ! command -v xxd &>/dev/null; then
-	if [[ "$distro" == "Debian" || "$distro" == "Ubuntu" ]]; then
+	if [[ "$distro" == "debian" || "$distro" == "ubuntu" ]]; then
 		yes | apt install xxd &> /dev/null  
 	else
-		echo "This script requires xxd to run"
-		echo "try install xxd first, then run this script again" 
+		err "this script requires xxd to run"
+		err "try install xxd first, then run this script again" 
 		exit 1
 	fi
 fi

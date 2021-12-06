@@ -11,6 +11,12 @@
 # note: this script will peform auto merge when local & remote branch are diverged
 # rebase is not supported yet, maybe I'll add it later
 
+# bring in utils functions
+for f in ../utils/*.sh;
+do
+	source "$f"
+done
+
 if ! branch=$(git branch --show-current); then
 	# one of the reason you may come to this is:
 	# current folder is not even monitored by git

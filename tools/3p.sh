@@ -13,12 +13,12 @@
 # nginx      87236      80,443
 # nginx      358789     none
 
-function err {
-	echo "$1" >&2
-}
+for f in ../utils/*.sh;
+do
+	source "$f"
+done
 
-# check distro
-if ! distro=$(bash <(curl -sL http://realrz.com/shell-scripts/distro.sh)); then
+if ! distro=$(getDistro); then
 	exit 1
 fi
 

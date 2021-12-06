@@ -6,17 +6,15 @@
 
 # if you want the latest configs, just run this script again after it's updated
 
-function err {
-	echo "$1" >&2
-}
-
-function header {
-	echo -e "\n** $1 **\n"
-}
+# bring in utils functions
+for f in ./utils/*.sh;
+do
+	source "$f"
+done
 
 # check distro
 header "Checking Distro"
-if ! distro=$(bash <(curl -sL http://realrz.com/shell-scripts/distro.sh)); then
+if ! distro=$(getDistro); then
 	exit 1
 fi
 echo "You are running: $distro"
