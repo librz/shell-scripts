@@ -13,6 +13,9 @@ tabs -2
 
 # ---------- global variables ----------
 
+# remote repo addr
+repoAddr="http://realrz.com/shell-scripts"
+
 distro="$(getDistro)" 
 export distro
 
@@ -40,7 +43,7 @@ setopt autocd # change directory just by typing its name
 # ---- aliases and functions ----
 
 # cs: config system 
-alias cs="bash <(curl -sL http://realrz.com/shell-scripts/init.sh)"
+alias cs="bash <(curl -sL $repoAddr/init.sh)"
 
 # edit/source zsh config
 alias zc='vim ~/.zshrc'
@@ -159,7 +162,7 @@ sop () {
 }
 
 # 3p: program, pid, port
-alias 3p="bash <(curl -sL http://realrz.com/shell-scripts/3p.sh)"
+alias 3p="bash <(curl -sL $repoAddr/3p.sh)"
 
 # print file as binary string
 binary () {
