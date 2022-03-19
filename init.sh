@@ -17,8 +17,8 @@ function err() {
 	echo "$1" >&2
 }
 
-function err() {
-	echo "$1" >&2
+function header() {
+	echo -e "\n** $1 **\n"
 }
 
 function getDistro() {
