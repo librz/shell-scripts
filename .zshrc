@@ -37,7 +37,7 @@ tabs -2
 # ---------- global variables ----------
 
 # remote repo addr
-repoAddr="http://realrz.com/shell-scripts"
+repoAddr="https://realrz.com/shell-scripts"
 
 distro="$(getDistro)" 
 export distro
