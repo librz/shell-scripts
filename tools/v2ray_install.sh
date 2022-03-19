@@ -1,11 +1,12 @@
 #!/bin/bash
 
-# bring in utils functions
-for f in ../utils/*.sh;
-do
-	# shellcheck source=/dev/null
-	source "$f"
-done
+# util functions
+
+function err() {
+	echo "$1" >&2
+}
+
+# pre-requisites
 
 echo "V2ray + tls + nginx + websocket 安装配置脚本"
 

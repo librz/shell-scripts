@@ -13,12 +13,32 @@
 # nginx      87236      80,443
 # nginx      358789     none
 
-# bring in utils functions
-for f in ../utils/*.sh;
-do
-	# shellcheck source=/dev/null
-	source "$f"
-done
+# util functions
+
+function err() {
+	echo "$1" >&2
+}
+
+function getDistro() {
+	local distro
+	if [[ -e /etc/os-release ]]; then
+		# Linux has /etc/os-release file
+		# shellcheck disable=SC1091
+		source /etc/os-release
+		# /etc/os-release when sourced, will add the $NAME environment variable
+		if echo "$NAME" | grep -iq ubuntu; then
+			distro="Ubuntu"
+		fi
+	elif [[ $(uname) == "Darwin" ]]; then
+		distro="macOS"
+	else
+		echo "Sorry, this script only support Ubuntu & macOS"
+		exit 1
+	fi
+	echo "$distro"
+}
+
+# check distro
 
 if ! distro=$(getDistro); then
 	exit 1
