@@ -3,6 +3,7 @@
 # bring in utils functions
 for f in ../utils/*.sh;
 do
+	# shellcheck source=/dev/null
 	source "$f"
 done
 

@@ -2,7 +2,7 @@
 
 # snp => show non-printable 
 # aim: explicitly show common non-printable characters in their escaped form
-# distro support: Debian, Ubuntu, macOS
+# distro support: Ubuntu, macOS
 # usage: bash <(curl -sL http://realrz.com/shell-scripts/snp.sh) /path/to/file
 
 # supported mappings
@@ -23,6 +23,7 @@
 # bring in all utils functions
 for f in ../utils/*.sh;
 do
+	# shellcheck source=/dev/null
 	source "$f"
 done
 

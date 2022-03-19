@@ -13,8 +13,10 @@
 # nginx      87236      80,443
 # nginx      358789     none
 
+# bring in utils functions
 for f in ../utils/*.sh;
 do
+	# shellcheck source=/dev/null
 	source "$f"
 done
 
@@ -22,8 +24,8 @@ if ! distro=$(getDistro); then
 	exit 1
 fi
 
-if [[ "$distro" != "Debian" && "$distro" != "Ubuntu" ]]; then
-	echo "Sorry, this script only supports Debian/Ubuntu"
+if [[ "$distro" != "Ubuntu" ]]; then
+	echo "Sorry, this script only supports Ubuntu"
 	exit 2
 fi
 
