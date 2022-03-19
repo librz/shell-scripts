@@ -19,8 +19,8 @@ trash () {
 	mv "$file" ~/.Trash
 }
 
-# open application
-oa () {
+# lauch application
+oapp () {
 	appPath="/Applications"
 	appName=$(ls "$appPath" | grep -i "$1")
 	if [[ -z "$appName" ]]; then
@@ -37,14 +37,11 @@ oa () {
 }
 
 # quit application
-qa () {
+qapp () {
 	osascript -e "tell app \"$1\" to quit"
 }
 
-# li: list interfaces
-alias li="networksetup -listallhardwareports"
-
-# wifi: print out private ip address is wifi is connected
+# wifi: print private ip address of the wifi interface 
 wifi () {
 	local intf=$(networksetup -listallhardwareports | awk '/Wi-Fi/{getline; print $2}')
 	ipconfig getifaddr "$intf"
