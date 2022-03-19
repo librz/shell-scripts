@@ -1,19 +1,25 @@
 #!/bin/bash
 
-# linux init script, run this to set up and config the system
-# it supports Debian/Ubuntu, macOS 
-# usage: bash <(curl -sL http://realrz.com/shell-scripts/init.sh)
+# linux init script, run this to set up 
+# OS support: Ubuntu, macOS 
+# usage: bash <(curl -sL https://realrz.com/shell-scripts/init.sh)
 
-# if you want the latest configs, just run this script again after it's updated
+# this script is idempotent, in another word, running it multiple times has the same effect as running it once
+# so when this script is updated, just execute it again
+
 
 # bring in utils functions
 for f in ./utils/*.sh;
 do
+	# shellcheck source=/dev/null
 	source "$f"
 done
 
+# remote repo address 
+repoAddr="https://realrz.com/shell-scripts"
+
 # check distro
-header "Checking Distro"
+header "Checking distro"
 if ! distro=$(getDistro); then
 	exit 1
 fi
@@ -24,8 +30,8 @@ header "Removing unnecessary pacakges using apt autoremove"
 yes | apt autoremove
 
 # install softwares
-header "Installing Common Software Packages"
-if [[ "$distro" == "Debian" || "$distro" == "Ubuntu" ]]; then
+header "Installing packages"
+if [[ "$distro" == "Ubuntu" ]]; then
 	if apt update &>/dev/null && yes | apt install zsh vim git snapd curl tldr tree xxd net-tools nmap dnsutils; then
 		echo "success"
 	else
@@ -64,12 +70,12 @@ if ! diff /usr/share/zoneinfo/Asia/Shanghai /etc/localtime; then
 fi
 
 header "Installing vim-plug"
-curl -sfLo ~/.vim/autoload/plug.vim --create-dirs http://realrz.com/shell-scripts/plug.vim
+curl -sfLo ~/.vim/autoload/plug.vim --create-dirs "$repoAddr"/plug.vim
 echo "success"
 
 header "Configuring .vimrc & .zshrc"
-curl -sL http://realrz.com/shell-scripts/.vimrc > ~/.vimrc
-curl -sL http://realrz.com/shell-scripts/.zshrc > ~/.zshrc
+curl -sL "$repoAddr"/.vimrc > ~/.vimrc
+curl -sL "$repoAddr"/.zshrc > ~/.zshrc
 echo "success"
 
 if [[ "$distro" != "macOS" ]]; then
@@ -84,4 +90,10 @@ if [[ "$distro" != "macOS" ]]; then
 	fi
 fi
 
-header "System Config Finished, You Can Source It Now, Some Changes May Require re-login to be Effective"
+header "Sourcing .zshrc" 
+# shellcheck source=/dev/null
+source ~/.zshrc
+echo "sourced"
+
+header "Success: System is all set"
+header "Note: Some changes may require re-login to be effective"
