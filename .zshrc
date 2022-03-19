@@ -1,18 +1,20 @@
 # bring in utils functions
 for f in ./shell-scripts/utils/*.sh;
 do
+	# shellcheck source=/dev/null
 	source "$f"
 done
 
 # set zsh to use vi mode & remap escape key to jk
 bindkey -v
 bindkey jk vi-cmd-mode
-# set terminal tab-width to be 2 columns 
+# set terminal tab-width to 2 columns 
 tabs -2
 
 # ---------- global variables ----------
 
-export distro="$(getDistro)" 
+distro="$(getDistro)" 
+export distro
 
 # nice simple colored prompt (%f means reset color?)
 export PS1="%10F%n%f@%12F%m%f%3F:%~%f %10F$%f "
@@ -25,7 +27,7 @@ export LANG="zh_CN.UTF-8"
 
 # set vim as default editor
 if [[ "$distro" == "Debian" || "$distro" == "Ubuntu" ]]; then
-	update-alternatives --set editor /usr/bin/vim.basic
+	update-alternatives --set editor "$(command -v vim)"
 else
 	# export EDITOR as environment variable
 	# this will set vim as default editor on macOS
@@ -69,7 +71,7 @@ alias wallip="curl curl https://api.myip.com"
 
 # -------- git related ---------
 
-# sac: stage all changes and commit
+# sac: stage all changes(under current folder) and commit(with a message)
 alias sac="git add . && git commit -m"
 
 # gs: git status
@@ -108,7 +110,7 @@ function nb () {
 
 # -------- end of git related ------
 
-# list path (one path per row, sort by path length)
+# list the PATH environment variable(one path per row, sort by path length)
 lpath() {
 	echo "$PATH" | awk -v RS=":" '{print length, $1}' | sort -n -s | awk '{print $2}'
 }
@@ -151,6 +153,7 @@ dirsize () {
 
 # sop: scan open port
 sop () {
+	# better use nmap
 	# although you could use netstat or ss, they work differently between macOS & linux
 	nmap localhost | grep "/tcp" | awk -F'/' '{print $1}'
 }
@@ -198,10 +201,12 @@ EOF
 
 # mac specific settins
 if [[ -e ~/.zshrc_mac ]]; then
+	# shellcheck source=/dev/null
 	source ~/.zshrc_mac
 fi
 
 # private settings, DO NOT make it public
 if [[ -e ~/.zshrc_private ]]; then
+	# shellcheck source=/dev/null
 	source ~/.zshrc_private
 fi

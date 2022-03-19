@@ -43,6 +43,6 @@ qapp () {
 
 # wifi: print private ip address of the wifi interface 
 wifi () {
-	local intf=$(networksetup -listallhardwareports | awk '/Wi-Fi/{getline; print $2}')
+	intf=$(networksetup -listallhardwareports | awk '/Wi-Fi/{getline; print $2}')
 	ipconfig getifaddr "$intf"
 }
