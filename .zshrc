@@ -173,9 +173,12 @@ space () {
 
 # print out directory size
 dirsize () {
-	du -h --max-depth=1 "$1" | tail -1 | awk '{print $1}'
+	local depthOption="--max-depth"
+	if [[ "$distro" == "macOS" ]]; then
+		depthOption="-d"
+	fi
+	du -h "$depthOption"=1 "$1" | tail -1 | awk '{print $1}'
 }
-
 
 # sop: scan open port
 sop () {
