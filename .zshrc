@@ -232,6 +232,7 @@ if [[ -e ~/.zshrc_mac ]]; then
 fi
 
 # private settings, DO NOT make it public
+# things like aliases for ssh into your vps, shell http/https proxy settings, added path to the PATH variable 
 if [[ -e ~/.zshrc_private ]]; then
 	# shellcheck source=/dev/null
 	source ~/.zshrc_private
