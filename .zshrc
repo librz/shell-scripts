@@ -97,8 +97,8 @@ alias wallip="curl curl https://api.myip.com"
 
 # -------- git related ---------
 
-# sac: stage all changes(under current folder) and commit(with a message)
-alias sac="git add . && git commit -m"
+# gcm: git commit -m
+alias gcm="git commit -m"
 
 # gs: git status
 alias gs="git status"
