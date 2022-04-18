@@ -42,8 +42,9 @@ repoAddr="https://realrz.com/shell-scripts"
 distro="$(getDistro)" 
 export distro
 
-# nice simple colored prompt (%f means reset color?)
-export PS1="%10F%n%f@%12F%m%f%3F:%~%f %10F$%f "
+# terminal prompt (%f means reset color, %{number}F is color value)
+# ref: https://zsh-prompt-generator.site/
+PROMPT="%10F%h%f %12F%~%f 🚀 "
 
 # locale setting
 export LC_ALL="en_US.UTF-8"
