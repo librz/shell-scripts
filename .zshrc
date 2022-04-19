@@ -42,9 +42,10 @@ repoAddr="https://realrz.com/shell-scripts"
 distro="$(getDistro)" 
 export distro
 
-# terminal prompt (%f means reset color, %{number}F is color value)
+# terminal prompt (%f means reset color; %F{color} format color, just google "shell format color" for available colors)
 # ref: https://zsh-prompt-generator.site/
-PROMPT="%10F%h%f %12F%~%f 🚀 "
+PROMPT="%F{yellow}%h%f %F{magenta}%~%f 🚀 "
+RPROMPT="%(?.👍.%F{red}%? 👎)%f"
 
 # locale setting
 export LC_ALL="en_US.UTF-8"
