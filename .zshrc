@@ -45,7 +45,7 @@ export distro
 # terminal prompt (%f means reset color; %F{color} format color, just google "shell format color" for available colors)
 # ref: https://zsh-prompt-generator.site/
 PROMPT="%F{yellow}%h%f %F{magenta}%~%f 🚀 "
-RPROMPT="%(?.👍.%F{red}%? 👎)%f"
+RPROMPT="%(?.%F{green}.%F{red})%?%f"
 
 # locale setting
 export LC_ALL="en_US.UTF-8"
