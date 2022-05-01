@@ -54,7 +54,7 @@ export LANG="zh_CN.UTF-8"
 # ---------- end of global variables ----------
 
 # set vim as default editor
-if [[ "$distro" == "Debian" || "$distro" == "Ubuntu" ]]; then
+if [[ "$distro" == "Ubuntu" ]]; then
 	update-alternatives --set editor "$(command -v vim)"
 else
 	# export EDITOR as environment variable
@@ -79,6 +79,7 @@ alias vc="vim ~/.vimrc"
 alias b="cd .."
 alias c='clear'
 alias v='vim'
+alias his='history -d'
 alias ls='ls --color=auto'
 alias wh='which'
 alias sc="shellcheck --shell=bash"
@@ -93,9 +94,6 @@ alias gh="cd ~"
 # ifconfig.me & ident.me both provide this type of service
 alias pubip="curl ifconfig.me"
 alias myip="curl ident.me"
-# if you are inside gfw
-alias gfwip="curl http://pv.sohu.com/cityjson"
-alias wallip="curl curl https://api.myip.com"
 
 # -------- git related ---------
 
