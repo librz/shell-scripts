@@ -211,10 +211,18 @@ smile () {
 	echo -n "f09f988e0a" | xxd -r -p
 }
 
-# ghs: generate html skeleton
-ghs () {
-	local html
-	html=$(
+# template generator
+template () {
+	echo "1) html"
+	echo "2) react function componet"
+	echo -n "Enter number to generate template: "
+	read -r option
+	echo
+
+# template preset
+local html
+local rfc
+html=$(
 cat << EOF
 <html>
 	<head>
@@ -225,7 +233,30 @@ cat << EOF
 </html>
 EOF
 )
-	echo "$html"
+rfc=$(
+cat << EOF
+import { FC } from 'react'
+
+interface IProps {}
+
+const Component: FC<IProps> = () => {
+	return (
+		<div></div>
+	)
+}
+
+export default Component
+EOF
+)
+	# echo to stdout
+	if [[ "$option" -eq 1 ]]; then
+		echo "$html"
+	elif [[ "$option" -eq 2 ]]; then
+		echo "$rfc"
+	else
+		echo "wrong option"
+		exit 1
+	fi
 }
 
 # mac specific settins
