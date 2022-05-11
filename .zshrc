@@ -255,7 +255,7 @@ EOF
 		echo "$rfc"
 	else
 		echo "wrong option"
-		exit 1
+		return 1
 	fi
 }
 
