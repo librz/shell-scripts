@@ -1,4 +1,4 @@
-## scripts & tools written in bash 🚀
+## script & tools for a better terminal experience 🚀
 
 #### download code
 
@@ -12,4 +12,4 @@ some scripts may require sudo access, do it at your own risk
 
 #### run script (remote)
 
-since raw.githubusercontent.com is blocked by YouKnowWho，those files are also hosted under https://realrz.com/shell-scripts/
+since `raw.githubusercontent.com` is blocked by YouKnowWho，those files are also hosted under https://realrz.com/shell-scripts/
