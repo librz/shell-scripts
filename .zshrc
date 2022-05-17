@@ -42,8 +42,10 @@ repoAddr="https://realrz.com/shell-scripts"
 distro="$(getDistro)" 
 export distro
 
-# nice simple colored prompt (%f means reset color?)
-export PS1="%10F%n%f@%12F%m%f%3F:%~%f %10F$%f "
+# terminal prompt (%f means reset color; %F{color} format color, just google "shell format color" for available colors)
+# ref: https://zsh-prompt-generator.site/
+PROMPT="%F{yellow}%h%f %F{magenta}%~%f 🚀 "
+RPROMPT="%(?.%F{green}.%F{red})%?%f"
 
 # locale setting
 export LC_ALL="en_US.UTF-8"
@@ -52,7 +54,7 @@ export LANG="zh_CN.UTF-8"
 # ---------- end of global variables ----------
 
 # set vim as default editor
-if [[ "$distro" == "Debian" || "$distro" == "Ubuntu" ]]; then
+if [[ "$distro" == "Ubuntu" ]]; then
 	update-alternatives --set editor "$(command -v vim)"
 else
 	# export EDITOR as environment variable
@@ -77,6 +79,7 @@ alias vc="vim ~/.vimrc"
 alias b="cd .."
 alias c='clear'
 alias v='vim'
+alias his='history -d'
 alias ls='ls --color=auto'
 alias wh='which'
 alias sc="shellcheck --shell=bash"
@@ -91,14 +94,11 @@ alias gh="cd ~"
 # ifconfig.me & ident.me both provide this type of service
 alias pubip="curl ifconfig.me"
 alias myip="curl ident.me"
-# if you are inside gfw
-alias gfwip="curl http://pv.sohu.com/cityjson"
-alias wallip="curl curl https://api.myip.com"
 
 # -------- git related ---------
 
-# sac: stage all changes(under current folder) and commit(with a message)
-alias sac="git add . && git commit -m"
+# gcm: git commit -m
+alias gcm="git commit -m"
 
 # gs: git status
 alias gs="git status"
@@ -173,9 +173,12 @@ space () {
 
 # print out directory size
 dirsize () {
-	du -h --max-depth=1 "$1" | tail -1 | awk '{print $1}'
+	local depthOption="--max-depth"
+	if [[ "$distro" == "macOS" ]]; then
+		depthOption="-d"
+	fi
+	du -h "$depthOption"=1 "$1" | tail -1 | awk '{print $1}'
 }
-
 
 # sop: scan open port
 sop () {
@@ -208,10 +211,18 @@ smile () {
 	echo -n "f09f988e0a" | xxd -r -p
 }
 
-# ghs: generate html skeleton
-ghs () {
-	local html
-	html=$(
+# template generator
+template () {
+	echo "1) html"
+	echo "2) react function componet"
+	echo -n "Enter number to generate template: "
+	read -r option
+	echo
+
+# template preset
+local html
+local rfc
+html=$(
 cat << EOF
 <html>
 	<head>
@@ -222,7 +233,30 @@ cat << EOF
 </html>
 EOF
 )
-	echo "$html"
+rfc=$(
+cat << EOF
+import { FC } from 'react'
+
+interface IProps {}
+
+const Component: FC<IProps> = () => {
+	return (
+		<div></div>
+	)
+}
+
+export default Component
+EOF
+)
+	# echo to stdout
+	if [[ "$option" -eq 1 ]]; then
+		echo "$html"
+	elif [[ "$option" -eq 2 ]]; then
+		echo "$rfc"
+	else
+		echo "wrong option"
+		return 1
+	fi
 }
 
 # mac specific settins
