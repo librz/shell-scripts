@@ -95,9 +95,10 @@ header "Installing vim-plug"
 curl -sfLo ~/.vim/autoload/plug.vim --create-dirs "$repoAddr"/plug.vim
 echo "success"
 
-header "Configuring .vimrc & .zshrc"
+header "Configuring .vimrc, .gitconfig & .zshrc"
 curl -sL "$repoAddr"/.vimrc > ~/.vimrc
 curl -sL "$repoAddr"/.zshrc > ~/.zshrc
+curl -sL "$repoAddr"/.gitconfig > ~/.gitconfig
 echo "success"
 
 if [[ "$distro" != "macOS" ]]; then
