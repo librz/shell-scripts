@@ -2,4 +2,5 @@
 	name = librz
 	email = rz19960718@gmail.com
 [core]
+	# force git to be case sensitive (which it by default is not under macOS)
 	ignoreCase = false
