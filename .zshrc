@@ -111,7 +111,7 @@ alias gds="git diff --shortstat"
 
 # gdb: git delete branch
 
-function gbd () {
+function gdb () {
 	echo -n "Branch regex: "
 	read -r branch_regex
 
