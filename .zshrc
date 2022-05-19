@@ -138,8 +138,6 @@ function gdb () {
 		return
 	fi 
 
-	git branch -D "$branches"
-
 	while IFS= read -r branch; do
 		git branch -D "$branch"
 	done <<< "$branches"
