@@ -106,20 +106,45 @@ alias gs="git status"
 # gl: formatted git log, placeholder starts with % sign, see: https://git-scm.com/docs/pretty-formats
 alias gl='git log --pretty="%Cgreen%h %Creset%ae %ar %C(cyan)<%s>"'
 
-# gb: git branch
-alias gb="git branch"
-
-# gc: git checkout
-alias gc="git checkout"
-
-# gp: git push
-alias gp="git push"
-
-# gm: git merge
-alias gm="git merge"
-
 # gds: git diff --shortstat
 alias gds="git diff --shortstat"
+
+# gdb: git delete branch
+
+function gbd () {
+	echo -n "Branch regex: "
+	read -r branch_regex
+
+	branches=$(git branch | awk -v pattern="$branch_regex" '$1 ~ pattern {print $1}')
+	# do not use "wc -l" as it gives 1 when the variable is empty (ref: https://stackoverflow.com/questions/6314679/in-bash-how-do-i-count-the-number-of-lines-in-a-variable)
+	branch_count=$(echo -n "$branches" | grep -c '^')
+
+	if [[ "$branch_count" -eq 0 ]]; then
+		echo "No branch matched"
+		return 1
+	fi
+
+	echo
+	echo "$branch_count branches matched: "
+	echo
+	echo "$branches"
+	echo
+
+	echo -n "Delete all branches listed above? (Y/N): "
+	read -r confirm
+	echo
+
+	if ! [[ "$confirm" =~ ^[Yy][Es]?[Ss]? ]]; then
+		echo "Aborted"
+		exit
+	fi 
+
+	git branch -D "$branches"
+
+	while IFS= read -r branch; do
+		git branch -D "$branch"
+	done <<< "$branches"
+}
 
 # gdac: git discard all changes
 function gdac () {
