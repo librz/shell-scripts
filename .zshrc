@@ -110,7 +110,6 @@ alias gl='git log --pretty="%Cgreen%h %Creset%ae %ar %C(cyan)<%s>"'
 alias gds="git diff --shortstat"
 
 # gdb: git delete branch
-
 function gdb () {
 	echo -n "Branch regex: "
 	read -r branch_regex
@@ -136,7 +135,7 @@ function gdb () {
 
 	if ! [[ "$confirm" =~ ^[Yy][Es]?[Ss]? ]]; then
 		echo "Aborted"
-		exit
+		return
 	fi 
 
 	git branch -D "$branches"
