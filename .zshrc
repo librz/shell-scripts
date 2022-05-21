@@ -96,6 +96,9 @@ alias myip="curl ident.me"
 
 # -------- git related ---------
 
+# gb: git branch
+alias gb="git branch"
+
 # gcm: git commit -m
 alias gcm="git commit -m"
 
@@ -204,8 +207,9 @@ dirsize () {
 # sop: scan open port
 sop () {
 	# better use nmap
-	# although you could use netstat or ss, they work differently between macOS & linux
-	nmap localhost | grep "/tcp" | awk -F'/' '{print $1}'
+	# although you could use netstat or ss, they work differently under macOS & linux
+	# -p- means scan all ports (1-65535)
+	nmap -p- localhost | grep "/tcp" | awk -F'/' '{print $1}'
 }
 
 # 3p: program, pid, port
