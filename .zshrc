@@ -1,6 +1,5 @@
 # util functions
 
-
 function header() {
 	echo -e "\n** $1 **\n"
 }
@@ -210,7 +209,7 @@ sop () {
 }
 
 # 3p: program, pid, port
-alias 3p="bash <(curl -sL $repoAddr/3p.sh)"
+alias 3p="bash <(curl -sL $repoAddr/tools/3p.sh)"
 
 # print file as binary string
 binary () {
