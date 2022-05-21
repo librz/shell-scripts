@@ -3,7 +3,7 @@
 # snp => show non-printable 
 # aim: explicitly show common non-printable characters in their escaped form
 # distro support: Ubuntu, macOS
-# usage: bash <(curl -sL http://realrz.com/shell-scripts/snp.sh) /path/to/file
+# usage: bash <(curl -sL http://realrz.com/shell-scripts/tools/snp.sh) /path/to/file
 
 # supported mappings
 # 1. carriage return => \r

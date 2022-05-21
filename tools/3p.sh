@@ -4,9 +4,9 @@
 # aim: coross reference 3p 
 
 # example usage:
-# bash <(curl -sL http://realrz.com/shell-scripts/3p.sh) --program nginx
-# bash <(curl -sL http://realrz.com/shell-scripts/3p.sh) --port 80
-# bash <(curl -sL http://realrz.com/shell-scripts/3p.sh) --pid 1234
+# bash <(curl -sL http://realrz.com/shell-scripts/tools/3p.sh) --program nginx
+# bash <(curl -sL http://realrz.com/shell-scripts/tools/3p.sh) --port 80
+# bash <(curl -sL http://realrz.com/shell-scripts/tools/3p.sh) --pid 1234
 
 # output format example(each line except the header represents a single process):
 # Program    Pid        Port
