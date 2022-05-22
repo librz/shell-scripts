@@ -54,7 +54,7 @@ yes | apt autoremove
 # install softwares
 header "Installing packages"
 if [[ "$distro" == "Ubuntu" ]]; then
-	if apt update &>/dev/null && yes | apt install zsh vim git snapd curl tldr tree xxd net-tools nmap dnsutils; then
+	if apt update &>/dev/null && yes | apt install zsh vim git snapd curl tldr tree xxd net-tools sysstat nmap dnsutils; then
 		echo "success"
 	else
 		err "apt install failed"
