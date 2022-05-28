@@ -145,6 +145,49 @@ function gdb () {
 	done <<< "$branches"
 }
 
+gdrb () {
+	git remote
+	echo
+	echo -n "Which remote is your target: "
+	read -r remote
+	if ! git remote | grep -q "$remote" &> /dev/null
+	then
+		echo "No such remote"
+		return 1
+	fi
+	echo "Fetching branchs on $remote"
+	git fetch --prune
+	all_branches=$(git branch -a | grep -i "remotes/${remote}")
+	all_branch_count=$(echo -n "$all_branches" | grep -c '^')
+	echo "Found $all_branch_count branches on ${remote}"
+	echo -n "Branch regex: "
+	read -r branch_regex
+	branches=$(git branch -a | grep -i "remotes/${remote}" | awk -v pattern="$branch_regex" -F'/' '$3 ~ pattern {print $3}')
+	branch_count=$(echo -n "$branches" | grep -c '^')
+	if [[ "$branch_count" -eq 0 ]]
+	then
+		echo "No branch matched"
+		return 2
+	fi
+	echo
+	echo "$branch_count branches matched: "
+	echo
+	echo "$branches"
+	echo
+	echo -n "Delete all branches listed above? (Y/N): "
+	read -r confirm
+	echo
+	if ! [[ "$confirm" =~ ^[Yy][Es]?[Ss]? ]]
+	then
+		echo "Aborted"
+		return
+	fi
+	while IFS= read -r branch
+	do
+		git push "$remote" --delete "$branch"
+	done <<< "$branches"
+}
+
 # gdac: git discard all changes
 function gdac () {
 	git clean -df
