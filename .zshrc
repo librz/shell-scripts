@@ -219,8 +219,7 @@ function gdac () {
 # nb: new branch from upstream/master
 function nb () {
 	git fetch upstream
-	git checkout upstream/master
-	git checkout -b "$1"
+	git checkout -b "$1" --no-track upstream/master
 }
 
 # -------- end of git related ------
