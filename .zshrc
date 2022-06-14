@@ -79,7 +79,6 @@ alias b="cd .."
 alias c='clear'
 alias v='vim'
 alias his='history -d'
-alias ls='ls --color=auto'
 alias wh='which'
 alias sc="shellcheck --shell=bash"
 
