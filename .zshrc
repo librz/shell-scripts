@@ -301,6 +301,43 @@ smile () {
 	echo -n "f09f988e0a" | xxd -r -p
 }
 
+# network info
+nwi () {
+	echo "Hardware Info"
+	hwinfo=$(sudo lshw -c network) 
+
+	# type: Wi-Fi or Ethernet
+	echo -n "type: "
+	desp=$(echo "$hwinfo" | grep 'description')
+	if echo "$desp" | grep -Ei 'wireless' &> /dev/null; then
+		echo "Wi-Fi"
+	else
+		echo "Ethernet"
+	fi
+
+	# interface
+	echo -n "interface: "
+	intfname=$(echo "$hwinfo" | grep 'logical name' | awk '{print $3}')
+	echo "$intfname"
+
+	# mac addr
+	echo -n "MAC addr: "
+	echo "$hwinfo" | grep 'serial' | awk '{print $2}'
+	echo
+
+	echo "Netowrk Info"
+
+	echo -n "hostname: "
+	hostname
+
+	echo -n "private IP: "
+	ifconfig "$intfname" | awk '/inet /{print $2}'
+
+	echo -n "public IP: "
+	curl ident.me 
+	echo
+}
+
 # template generator
 template () {
 	echo "1) html"
