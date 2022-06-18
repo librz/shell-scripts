@@ -53,13 +53,15 @@ export LANG="zh_CN.UTF-8"
 # ---------- end of global variables ----------
 
 # set vim as default editor
-if [[ "$distro" == "Ubuntu" ]]; then
-	update-alternatives --set editor "$(command -v vim)"
-else
-	# export EDITOR as environment variable
-	# this will set vim as default editor on macOS
-	EDITOR=$(command -v vim)
-	export EDITOR
+if command -v vim &> /dev/null; then
+  if [[ "$distro" == "Ubuntu" ]]; then
+    update-alternatives --set editor /usr/bin/vim.basic
+  else
+    # export EDITOR as environment variable
+    # this will set vim as default editor on macOS
+    EDITOR=$(command -v vim)
+    export EDITOR
+  fi  
 fi
 
 setopt autocd # change directory just by typing its name
