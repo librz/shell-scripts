@@ -48,7 +48,7 @@ fi
 echo "You are running: $distro"
 
 # auto remove
-if [[ "$distro" == "ubuntu" ]]; then
+if [[ "$distro" == "Ubuntu" ]]; then
 	header "Removing unnecessary pacakges using apt autoremove"
 	yes | apt autoremove
 fi

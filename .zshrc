@@ -346,7 +346,7 @@ ni_mac () {
 # network info
 
 ni () {
-	if [[ "$distro" == "ubuntu" ]]; then
+	if [[ "$distro" == "Ubuntu" ]]; then
 		ni_ubuntu
 	else
 		ni_mac
