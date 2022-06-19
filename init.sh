@@ -48,8 +48,10 @@ fi
 echo "You are running: $distro"
 
 # auto remove
-header "Removing unnecessary pacakges using apt autoremove"
-yes | apt autoremove
+if [[ "$distro" == "ubuntu" ]]; then
+	header "Removing unnecessary pacakges using apt autoremove"
+	yes | apt autoremove
+fi
 
 # install softwares
 header "Installing packages"
