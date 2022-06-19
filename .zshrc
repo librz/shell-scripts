@@ -340,7 +340,27 @@ ni_ubuntu () {
 
 # network info for mac
 ni_mac () {
-	echo "Not yet completed"	
+	local ports=$(networksetup -listallhardwareports)
+	local wifi_intf=$(echo $ports | awk '/Wi-Fi/{getline; print $2}')
+	if [[ -n "$wifi_intf" ]]
+	then
+		local wifi_ip=$(ipconfig getifaddr "$wifi_intf")
+		if [[ -n "$wifi_ip" ]]
+		then
+			echo "Wi-Fi: $wifi_ip"
+		fi
+	fi
+	local eth_intf=$(echo $ports | awk '/Ethernet$/{getline; print $2}')
+	local eth_mac=$(echo $ports | awk '/Ethernet$/{getline; getline; print $3}')
+	echo "Ethernet MAC: ${eth_mac}"
+	if [[ -n "$eth_intf" ]]
+	then
+		local eth_ip=$(ipconfig getifaddr "$eth_intf")
+		if [[ -n "$eth_ip" ]]
+		then
+			echo "Ethernet: $eth_ip"
+		fi
+	fi
 }
 
 # network info
