@@ -303,12 +303,12 @@ smile () {
 
 # network info for ubuntu
 ni_ubuntu () {
-	hwinfo=$(sudo lshw -c network) 
+	local hwinfo=$(sudo lshw -c network) 
 	echo "**Hardware Info**"
 
 	# type: Wi-Fi or Ethernet
 	echo -n "type: "
-	desp=$(echo "$hwinfo" | grep 'description')
+	local desp=$(echo "$hwinfo" | grep 'description')
 	if echo "$desp" | grep -Ei 'wireless' &> /dev/null; then
 		echo "Wi-Fi"
 	else
@@ -317,7 +317,7 @@ ni_ubuntu () {
 
 	# interface
 	echo -n "interface: "
-	intfname=$(echo "$hwinfo" | grep 'logical name' | awk '{print $3}')
+	local intfname=$(echo "$hwinfo" | grep 'logical name' | awk '{print $3}')
 	echo "$intfname"
 
 	# mac addr
@@ -334,33 +334,47 @@ ni_ubuntu () {
 	ifconfig "$intfname" | awk '/inet /{print $2}'
 
 	echo -n "public IP: "
-	curl ident.me 
+	curl -sL ident.me 
 	echo
 }
 
 # network info for mac
 ni_mac () {
 	local ports=$(networksetup -listallhardwareports)
-	local wifi_intf=$(echo $ports | awk '/Wi-Fi/{getline; print $2}')
+	# Wi-Fi info
+	local wifi_intf=$(echo "$ports" | awk '/Wi-Fi/{getline; print $2}')
 	if [[ -n "$wifi_intf" ]]
 	then
 		local wifi_ip=$(ipconfig getifaddr "$wifi_intf")
 		if [[ -n "$wifi_ip" ]]
 		then
-			echo "Wi-Fi: $wifi_ip"
+			echo "** Wi-Fi **"
+			echo "interface: ${wifi_intf}"
+			local wifi_mac=$(echo "$ports" | awk '/Wi-Fi$/{getline; getline; print $3}')
+			echo "MAC addr: ${wifi_mac}"
+			echo "private IP: $wifi_ip"
+			echo
 		fi
 	fi
-	local eth_intf=$(echo $ports | awk '/Ethernet$/{getline; print $2}')
-	local eth_mac=$(echo $ports | awk '/Ethernet$/{getline; getline; print $3}')
-	echo "Ethernet MAC: ${eth_mac}"
+
+	# Ethernet info
+	local eth_intf=$(echo "$ports" | awk '/Ethernet$/{getline; print $2}')
 	if [[ -n "$eth_intf" ]]
 	then
 		local eth_ip=$(ipconfig getifaddr "$eth_intf")
 		if [[ -n "$eth_ip" ]]
 		then
-			echo "Ethernet: $eth_ip"
+			echo "** Ethernet **"
+			echo "interface: ${eth_intf}"
+			local eth_mac=$(echo "$ports" | awk '/Ethernet$/{getline; getline; print $3}')
+			echo "MAC addr: ${eth_mac}"
+			echo "private IP: $eth_ip"
+			echo
 		fi
 	fi
+	# public ip
+	echo "hostname: $(hostname)"
+	echo "public ip: $(curl -sL ident.me)"
 }
 
 # network info
