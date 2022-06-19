@@ -301,10 +301,10 @@ smile () {
 	echo -n "f09f988e0a" | xxd -r -p
 }
 
-# network info
-nwi () {
-	echo "Hardware Info"
+# network info for ubuntu
+ni_ubuntu () {
 	hwinfo=$(sudo lshw -c network) 
+	echo "**Hardware Info**"
 
 	# type: Wi-Fi or Ethernet
 	echo -n "type: "
@@ -325,7 +325,7 @@ nwi () {
 	echo "$hwinfo" | grep 'serial' | awk '{print $2}'
 	echo
 
-	echo "Netowrk Info"
+	echo "**Netowrk Info**"
 
 	echo -n "hostname: "
 	hostname
@@ -336,6 +336,21 @@ nwi () {
 	echo -n "public IP: "
 	curl ident.me 
 	echo
+}
+
+# network info for mac
+ni_mac () {
+	echo "Not yet completed"	
+}
+
+# network info
+
+ni () {
+	if [[ "$distro" == "ubuntu" ]]; then
+		ni_ubuntu
+	else
+		ni_mac
+	fi
 }
 
 # template generator
