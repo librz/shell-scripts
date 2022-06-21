@@ -304,7 +304,6 @@ smile () {
 # network info for ubuntu
 ni_ubuntu () {
 	local hwinfo=$(sudo lshw -c network) 
-	echo "**Hardware Info**"
 
 	# type: Wi-Fi or Ethernet
 	echo -n "type: "
@@ -390,7 +389,7 @@ ni () {
 # template generator
 template () {
 	echo "1) html"
-	echo "2) react function componet"
+	echo "2) react FC"
 	echo -n "Enter number to generate template: "
 	read -r option
 	echo
