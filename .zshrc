@@ -371,8 +371,10 @@ ni_mac () {
 			echo
 		fi
 	fi
-	# public ip
+	# hostname, nameserver, public ip
 	echo "hostname: $(hostname)"
+	local nameserver=$(scutil --dns | grep nameserver | awk '{print $3}' | sort | uniq)
+	echo "nameserver: $nameserver"
 	echo "public ip: $(curl -sL ident.me)"
 }
 
