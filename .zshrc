@@ -332,6 +332,9 @@ ni_ubuntu () {
 	echo -n "private IP: "
 	ifconfig "$intfname" | awk '/inet /{print $2}'
 
+	echo -n "nameserver: "
+	cat /etc/resolv.conf | grep -i '^nameserver' | head -n1 | cut -d ' ' -f2
+
 	echo -n "public IP: "
 	curl -sL ident.me 
 	echo
