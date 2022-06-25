@@ -325,6 +325,7 @@ ni_ubuntu () {
 	echo
 
 	echo "**Netowrk Info**"
+	echo
 
 	echo -n "hostname: "
 	hostname
@@ -333,7 +334,12 @@ ni_ubuntu () {
 	ifconfig "$intfname" | awk '/inet /{print $2}'
 
 	echo -n "nameserver: "
+	# ubuntu uses systemd-resolve so this is not default gateway
 	cat /etc/resolv.conf | grep -i '^nameserver' | head -n1 | cut -d ' ' -f2
+	resolvectl status | grep -i "current dns server" | awk "NR==1{pirnt $2}"
+	
+	echo -n "gateway: "
+	ip route | grep default | awk 'NR==1{print $3}'
 
 	echo -n "public IP: "
 	curl -sL ident.me 
