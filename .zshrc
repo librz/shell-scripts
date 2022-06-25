@@ -333,10 +333,9 @@ ni_ubuntu () {
 	echo -n "private IP: "
 	ifconfig "$intfname" | awk '/inet /{print $2}'
 
-	echo -n "nameserver: "
-	# ubuntu uses systemd-resolve so this is not default gateway
-	cat /etc/resolv.conf | grep -i '^nameserver' | head -n1 | cut -d ' ' -f2
-	resolvectl status | grep -i "current dns server" | awk "NR==1{pirnt $2}"
+	# ubuntu uses systemd-resolve 
+	echo -n "dns server: "
+	resolvectl status | grep -i "current dns server" | awk -F': ' '{print $2}' 
 	
 	echo -n "gateway: "
 	ip route | grep default | awk 'NR==1{print $3}'
