@@ -112,6 +112,21 @@ alias gl='git log --pretty="%Cgreen%h %Creset%ae %ar %C(cyan)<%s>"'
 # gds: git diff --shortstat
 alias gds="git diff --shortstat"
 
+# gua: git unstage all
+alias gua="git restore --staged ."
+
+# gdac: git discard all changes
+function gdac () {
+	git clean -df
+	git checkout -- .
+}
+
+# nb: new branch from upstream/master
+function nb () {
+	git fetch upstream
+	git checkout -b "$1" --no-track upstream/master
+}
+
 # gdb: git delete branch (by regex)
 function gdb () {
 	# basic check
@@ -211,17 +226,6 @@ function gdb () {
 	echo "DONE"
 }
 
-# gdac: git discard all changes
-function gdac () {
-	git clean -df
-	git checkout -- .
-}
-
-# nb: new branch from upstream/master
-function nb () {
-	git fetch upstream
-	git checkout -b "$1" --no-track upstream/master
-}
 
 # -------- end of git related ------
 
