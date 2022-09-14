@@ -103,6 +103,9 @@ alias gb="git branch"
 # gcm: git commit -m
 alias gcm="git commit -m"
 
+# gca: git commit --amend
+alias gca="git commit --amend"
+
 # gs: git status
 alias gs="git status"
 
