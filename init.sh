@@ -94,7 +94,7 @@ if ! diff /usr/share/zoneinfo/Asia/Shanghai /etc/localtime; then
 fi
 
 header "Installing vim-plug"
-curl -sfLo ~/.vim/autoload/plug.vim --create-dirs "$repoAddr"/plug.vim
+curl -sfLo ~/.vim/autoload/plug.vim --create-dirs 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 echo "success"
 
 header "Configuring .vimrc, .gitconfig & .zshrc"
