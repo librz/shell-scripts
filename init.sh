@@ -88,8 +88,8 @@ else
 	exit 3
 fi
 
-header "Setting Timezone to Asia/Shanghai"
 if ! diff /usr/share/zoneinfo/Asia/Shanghai /etc/localtime; then
+	header "Setting Timezone to Asia/Shanghai"
 	cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo "success"
 fi
 
@@ -97,8 +97,8 @@ header "Installing vim-plug"
 curl -sfLo ~/.vim/autoload/plug.vim --create-dirs 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim' && echo "success"
 
 header "Installing zsh-syntax-highlighting"
-git clone 'https://github.com/zsh-users/zsh-syntax-highlighting.git' \
-&& mv ./zsh-syntax-highlighting ~ \
+rm -rf ~/zsh-syntax-highlighting \
+&& git clone --quiet 'https://github.com/zsh-users/zsh-syntax-highlighting.git' ~/zsh-syntax-highlighting \
 && echo "success"
 
 header "Configuring .vimrc, .gitconfig & .zshrc"
@@ -119,10 +119,5 @@ if [[ "$distro" != "macOS" ]]; then
 	fi
 fi
 
-header "Sourcing .zshrc" 
-# shellcheck source=/dev/null
-source ~/.zshrc
-echo "sourced"
-
-header "Success: System is all set"
-header "Note: Some changes may require re-login to be effective"
+echo
+echo "System init successful, please run: source ~/.zshrc"
