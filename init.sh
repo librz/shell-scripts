@@ -94,8 +94,12 @@ if ! diff /usr/share/zoneinfo/Asia/Shanghai /etc/localtime; then
 fi
 
 header "Installing vim-plug"
-curl -sfLo ~/.vim/autoload/plug.vim --create-dirs 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-echo "success"
+curl -sfLo ~/.vim/autoload/plug.vim --create-dirs 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim' && echo "success"
+
+header "Installing zsh-syntax-highlighting"
+git clone 'https://github.com/zsh-users/zsh-syntax-highlighting.git' \
+&& mv ./zsh-syntax-highlighting ~ \
+&& echo "success"
 
 header "Configuring .vimrc, .gitconfig & .zshrc"
 curl -sL "$repoAddr"/.vimrc > ~/.vimrc

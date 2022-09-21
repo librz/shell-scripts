@@ -66,6 +66,10 @@ fi
 
 setopt autocd # change directory just by typing its name
 
+if [ -e ~/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+	source ~/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
+
 # ---- aliases and functions ----
 
 # cs: config system 
