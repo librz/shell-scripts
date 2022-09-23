@@ -96,8 +96,8 @@ alias gh="cd ~"
 
 # pubip & myip for public ip address
 # ifconfig.me & ident.me both provide this type of service
-alias pubip="curl ifconfig.me"
-alias myip="curl ident.me"
+alias pubip="curl -sL -sL https://ifconfig.me"
+alias myip="curl -sL https://v4.ident.me"
 
 # -------- git related ---------
 
@@ -352,7 +352,7 @@ ni_ubuntu () {
 	ip route | grep default | awk 'NR==1{print $3}'
 
 	echo -n "public IP: "
-	curl -sL ident.me 
+	curl -sL v4.ident.me 
 	echo
 }
 
@@ -393,7 +393,7 @@ ni_mac () {
 	# hostname, nameserver, public ip
 	echo "hostname: $(hostname)"
 	scutil --dns | grep nameserver | sort | uniq
-	echo "public ip: $(curl -sL ident.me)"
+	echo "public ip: $(curl -sL v4.ident.me)"
 }
 
 # network info
