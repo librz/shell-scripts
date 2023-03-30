@@ -56,7 +56,7 @@ fi
 # install softwares
 header "Installing packages"
 if [[ "$distro" == "Ubuntu" ]]; then
-	if apt update &>/dev/null && yes | apt install zsh vim git snapd curl tldr tree xxd net-tools sysstat nmap dnsutils; then
+	if apt update &>/dev/null && yes | apt install zsh vim git snapd curl tldr tree xxd net-tools sysstat nmap dnsutils neofetch lolcat; then
 		echo "success"
 	else
 		err "apt install failed"
