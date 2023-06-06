@@ -124,7 +124,10 @@ alias gua="git restore --staged ."
 
 # gdac: git discard all changes
 function gdac () {
+	# clean untracked files & directories
 	git clean -df
+	# discard all changes in tracked files by checking out HEAD
+	# you can also use `git restore .` to achieve the same effect
 	git checkout -- .
 }
 
