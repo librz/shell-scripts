@@ -27,4 +27,4 @@ You can use namp to check whether a specific port is open on remote machine: `nm
 
 This repo is open source thus 100% open for verification and risk checking. 
 
-That being said, running init.sh required **sudo** access, do it at your own risk
+That being said, running `init.sh` requires **sudo** access, do it at your own risk.
