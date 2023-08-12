@@ -1,11 +1,11 @@
 ## script & tools for a better terminal experience 🚀
 
-#### system support
+#### System support
 
 - macOS 10+
 - Ubuntu 16+
 
-#### how to install
+#### How to install
 
 `bash <(curl -sL https://raw.githubusercontent.com/librz/shell-scripts/main/init.sh)`
 
@@ -13,7 +13,7 @@ For users who cannot access github because of censorship, this project is also h
 
 `bash <(curl -sL https://realrz.com/shell-scripts/init.sh)`
 
-#### important notice
+#### Important notice
 
 This script will change ssh listening port from the default `22` to `9000`, this is a delibrate choice to help avoid malicious attempts to scan/break into your VPS.
 
@@ -23,6 +23,8 @@ On Ubuntu, the firewall manager is `ufw`, you can check its status using `ufw st
 
 You can use namp to check whether a specific port is open on remote machine: `nmap -Pn {ip} -n {port}`
 
-#### disclaimer
+#### Disclaimer
 
-running init.sh required sudo access, do it at your own risk
+This repo is open source thus 100% open for verification and risk checking. 
+
+That being said, running init.sh required **sudo** access, do it at your own risk
