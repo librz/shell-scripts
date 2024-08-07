@@ -116,8 +116,8 @@ alias gs="git status"
 # gl: formatted git log, placeholder starts with % sign, see: https://git-scm.com/docs/pretty-formats
 alias gl='git log --pretty="%Cgreen%h %Creset%ae %ar %C(cyan)<%s>"'
 
-# gds: git diff --shortstat
-alias gds="git diff --shortstat"
+# gds: git diff --stat
+alias gds="git diff --stat"
 
 # gua: git unstage all
 alias gua="git restore --staged ."
