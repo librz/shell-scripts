@@ -15,7 +15,7 @@
 
 	# common
 	st = status
-  	sw = switch
+	sw = switch
 	pl = log --pretty='%Cgreen%h %Creset%an %ar %C(cyan)<%s>' # pretty log. see: https://git-scm.com/docs/pretty-formats
 	dac = ! git clean -df && git restore . # discard all changes (discard untracked files & dirs, changes in working dir)
 	pick = cherry-pick  # pick commit(s)
