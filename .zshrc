@@ -101,42 +101,6 @@ alias myip="curl -sL https://v4.ident.me"
 
 # -------- git related ---------
 
-# gb: git branch
-alias gb="git branch"
-
-# gcm: git commit -m
-alias gcm="git commit -m"
-
-# gca: git commit --amend
-alias gca="git commit --amend"
-
-# gs: git status
-alias gs="git status"
-
-# gl: formatted git log, placeholder starts with % sign, see: https://git-scm.com/docs/pretty-formats
-alias gl='git log --pretty="%Cgreen%h %Creset%ae %ar %C(cyan)<%s>"'
-
-# gds: git diff --stat
-alias gds="git diff --stat"
-
-# gua: git unstage all
-alias gua="git restore --staged ."
-
-# gdac: git discard all changes
-function gdac () {
-	# clean untracked files & directories
-	git clean -df
-	# discard all changes in tracked files by checking out HEAD
-	# you can also use `git restore .` to achieve the same effect
-	git checkout -- .
-}
-
-# nb: new branch from upstream/master
-function nb () {
-	git fetch upstream
-	git checkout -b "$1" --no-track upstream/master
-}
-
 # gdb: git delete branch (by regex)
 function gdb () {
 	# basic check
