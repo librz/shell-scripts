@@ -2,8 +2,8 @@
 
 #### System support
 
-- macOS 10+
-- Ubuntu 16+
+- macOS 12+
+- Ubuntu 18+
 
 #### How to install
 
