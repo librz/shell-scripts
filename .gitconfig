@@ -1,6 +1,44 @@
 [user]
-	name = librz
-	email = rz19960718@gmail.com
-[core]
-	# force git to be case sensitive (which it by default is not under macOS)
-	ignoreCase = false
+	name = Patrick Ren 🚀
+	email = patrick@gmai.com
+[init]
+	defaultBranch = main
+[fetch]
+	# Auto rm remote-tracking refs that no longer exist on the remote
+	prune = true
+[push]
+	default = current
+	autoSetupRemote = true
+[alias]
+	# list out all aliases (`!` runs normal shell commands)
+	la = ! git config -l | grep -E "^alias"
+
+	# common
+	st = status
+  	sw = switch
+	pl = log --pretty='%Cgreen%h %Creset%an %ar %C(cyan)<%s>' # pretty log. see: https://git-scm.com/docs/pretty-formats
+	dac = ! git clean -df && git restore . # discard all changes (discard untracked files & dirs, changes in working dir)
+	pick = cherry-pick  # pick commit(s)
+
+	# commit related
+	cm = commit -m
+	ca = commit --amend
+
+	# stash related
+	sl = stash list
+	sa = stash apply
+	sp = stash pop
+	sm = stash -m
+
+	# restore related
+	r = restore # discard changes in working directory
+	rs = restore --staged  # unstage file(s)
+
+	# diff related
+	d = diff # diff with changes working directory
+	ds = diff --staged # diff with staged changes 
+	dst = diff --stat
+
+	# branch related
+	br = for-each-ref refs/heads/ --sort=-committerdate \
+       --format=\"%(committerdate:short) %(color:red)%(objectname:short) %(if)%(HEAD)%(then)%(color:cyan)* %(else)%(color:yellow)%(end)%(refname:short)%(color:reset) (%(color:green)%(committerdate:relative)%(color:reset))\"
