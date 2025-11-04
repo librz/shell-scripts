@@ -107,7 +107,12 @@ curl -sL "$repoAddr"/.zshrc > ~/.zshrc
 curl -sL "$repoAddr"/.gitconfig > ~/.gitconfig
 echo "success"
 
+
+
 if [[ "$distro" != "macOS" ]]; then
+	if command -v ufw >/dev/null 2>&1; then
+		ufw allow 9000
+	fi
 	if [[ -f /etc/ssh/sshd_config ]]; then
 		header 'File /etc/ssh/sshd_config exits, chaning sshd port from 22 to 9000'
 		# change sshd port to 9000, set ClientAliveInterval to 5 seconds
