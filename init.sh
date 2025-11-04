@@ -9,7 +9,7 @@
 
 
 # remote repo address 
-repoAddr="https://realrz.com/shell-scripts"
+repoAddr="https://raw.githubusercontent.com/librz/shell-scripts/refs/heads/main"
 
 # utils functions
 
