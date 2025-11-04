@@ -36,7 +36,7 @@ tabs -2
 # ---------- global variables ----------
 
 # remote repo addr
-repoAddr="https://realrz.com/shell-scripts"
+repoAddr="https://raw.githubusercontent.com/librz/shell-scripts/refs/heads/main"
 
 distro="$(getDistro)" 
 export distro
