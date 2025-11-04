@@ -107,8 +107,6 @@ curl -sL "$repoAddr"/.zshrc > ~/.zshrc
 curl -sL "$repoAddr"/.gitconfig > ~/.gitconfig
 echo "success"
 
-
-
 if [[ "$distro" != "macOS" ]]; then
 	if command -v ufw >/dev/null 2>&1; then
 		ufw allow 9000
