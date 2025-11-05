@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # system init script, I run it everytime I setup a new computer
 # OS support: Ubuntu, macOS 
@@ -7,7 +7,7 @@
 # FYI: this script is idempotent
 
 REMOTE_REPO_URL="https://github.com/librz/shell-scripts.git"
-LOCAL_REPO_PATH="$HOME/shell-scripts"
+LOCAL_REPO_PATH="'$HOME'/shell-scripts"
 
 if [ -d "$LOCAL_REPO_PATH" ]; then
 	echo "Folder '$LOCAL_REPO_PATH' found. Removing it..."
