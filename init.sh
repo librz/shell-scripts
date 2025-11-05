@@ -16,7 +16,7 @@ if [ -d "$LOCAL_REPO_PATH" ]; then
 fi
 
 echo "Cloning shell-scripts from '$REMOTE_REPO_URL' to '$LOCAL_REPO_PATH'..."
-git clone "$REMOTE_REPO_URL" "$LOCAL_REPO_PATH"
+git clone --quiet "$REMOTE_REPO_URL" "$LOCAL_REPO_PATH"
 if [ $? -eq 0 ]; then
 	echo "✅ Git clone success."
 else
