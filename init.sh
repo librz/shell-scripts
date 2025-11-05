@@ -1,15 +1,28 @@
 #!/bin/bash
 
-# linux init script, run this to set up 
+# system init script, I run it everytime I setup a new computer
 # OS support: Ubuntu, macOS 
-# usage: bash <(curl -sL https://realrz.com/shell-scripts/init.sh)
+# usage: bash <(curl -sL https://raw.githubusercontent.com/librz/shell-scripts/refs/heads/main/init.sh)
 
-# this script is idempotent, in another word, running it multiple times has the same effect as running it once
-# so when this script is updated, just execute it again
+# FYI: this script is idempotent
 
+REMOTE_REPO_URL="https://github.com/librz/shell-scripts.git"
+LOCAL_REPO_PATH="~/shell-scripts"
 
-# remote repo address 
-repoAddr="https://raw.githubusercontent.com/librz/shell-scripts/refs/heads/main"
+if [ -d "$LOCAL_REPO_PATH" ]; then
+	echo "Folder '$LOCAL_REPO_PATH' found. Removing it..."
+	rm -rf "$LOCAL_REPO_PATH"
+	echo "Folder '$LOCAL_REPO_PATH' removed."
+fi
+
+echo "Cloning shell-scripts from '$REMOTE_REPO_URL' to '$LOCAL_REPO_PATH'..."
+git clone "$REMOTE_REPO_URL" "$LOCAL_REPO_PATH"
+if [ $? -eq 0 ]; then
+	echo "✅ Git clone success."
+else
+	echo "❌ Git clone failed! Check the URL and permissions." >&2
+	exit 1
+fi
 
 # utils functions
 
@@ -102,9 +115,9 @@ rm -rf ~/zsh-syntax-highlighting \
 && echo "success"
 
 header "Configuring .vimrc, .gitconfig & .zshrc"
-curl -sL "$repoAddr"/.vimrc > ~/.vimrc
-curl -sL "$repoAddr"/.zshrc > ~/.zshrc
-curl -sL "$repoAddr"/.gitconfig > ~/.gitconfig
+curl -sL "$LOCAL_REPO_PATH/.vimrc" > ~/.vimrc
+curl -sL "$LOCAL_REPO_PATH/.zshrc" > ~/.zshrc
+curl -sL "$LOCAL_REPO_PATH/.gitconfig" > ~/.gitconfig
 echo "success"
 
 if [[ "$distro" != "macOS" ]]; then
