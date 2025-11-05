@@ -114,10 +114,10 @@ rm -rf ~/zsh-syntax-highlighting \
 && git clone --quiet 'https://github.com/zsh-users/zsh-syntax-highlighting.git' ~/zsh-syntax-highlighting \
 && echo "success"
 
-header "Configuring .vimrc, .gitconfig & .zshrc"
-curl -sL "$LOCAL_REPO_PATH/.vimrc" > ~/.vimrc
-curl -sL "$LOCAL_REPO_PATH/.zshrc" > ~/.zshrc
-curl -sL "$LOCAL_REPO_PATH/.gitconfig" > ~/.gitconfig
+header "Pouring .vimrc, .gitconfig & .zshrc from '$LOCAL_REPO_PATH' to '$HOME'"
+cat "$LOCAL_REPO_PATH/.vimrc" > ~/.vimrc
+cat "$LOCAL_REPO_PATH/.zshrc" > ~/.zshrc
+cat "$LOCAL_REPO_PATH/.gitconfig" > ~/.gitconfig
 echo "success"
 
 if [[ "$distro" != "macOS" ]]; then
