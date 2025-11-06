@@ -2,12 +2,12 @@
 
 #### System support
 
-- macOS 12+
-- Ubuntu 18+
+- macOS 15+
+- Ubuntu 20+
 
 #### How to install
 
-`bash <(curl -sL https://raw.githubusercontent.com/librz/shell-scripts/main/init.sh)`
+`sudo bash <(curl -sL https://raw.githubusercontent.com/librz/shell-scripts/main/init.sh)`
 
 #### Important notice
 
