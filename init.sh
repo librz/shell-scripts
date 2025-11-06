@@ -72,19 +72,19 @@ header "Installing packages"
 PACKAGE_LIST=(
 	zsh
 	vim
-    git
-    snapd
-    curl
-    tldr
-    tree
-    xxd
-    net-tools
-    sysstat
-    nmap
-    dnsutils
-    neofetch
-    lolcat
-    shellcheck
+	git
+	snapd
+	curl
+	tldr
+	tree
+	xxd
+	net-tools
+	sysstat
+	nmap
+	dnsutils
+	neofetch
+	lolcat
+	shellcheck
 )
 if [[ "$distro" == "Ubuntu" ]]; then
 	if apt update &>/dev/null && yes | apt install "${PACKAGE_LIST[@]}"; then
