@@ -4,25 +4,10 @@
 # OS support: Ubuntu, macOS 
 # usage: bash <(curl -sL https://raw.githubusercontent.com/librz/shell-scripts/refs/heads/main/init.sh)
 
-# FYI: this script is idempotent
+# FYI: this script is idempotent (running it multiple times has the same effect as running it once)
 
 REMOTE_REPO_URL="https://github.com/librz/shell-scripts.git"
 LOCAL_REPO_PATH="$HOME/shell-scripts"
-
-echo "Cloning shell-scripts from '$REMOTE_REPO_URL' to '$LOCAL_REPO_PATH'..."
-
-if [ -d "$LOCAL_REPO_PATH" ]; then
-	rm -rf "$LOCAL_REPO_PATH"
-fi
-
-git clone --quiet "$REMOTE_REPO_URL" "$LOCAL_REPO_PATH"
-
-if [ $? -eq 0 ]; then
-	echo "✅ Git clone success."
-else
-	echo "❌ Git clone failed! Check the URL and permissions." >&2
-	exit 1
-fi
 
 # utils functions
 
@@ -53,6 +38,22 @@ function getDistro() {
 	echo "$distro"
 }
 
+# clone repo
+header "Cloning shell-scripts from '$REMOTE_REPO_URL' to '$LOCAL_REPO_PATH'..."
+
+if [ -d "$LOCAL_REPO_PATH" ]; then
+	rm -rf "$LOCAL_REPO_PATH"
+fi
+
+git clone --quiet "$REMOTE_REPO_URL" "$LOCAL_REPO_PATH"
+
+if [ $? -eq 0 ]; then
+	echo "✅ Git clone success."
+else
+	echo "❌ Git clone failed! Check the URL and permissions." >&2
+	exit 1
+fi
+
 # check distro
 header "Checking distro"
 if ! distro=$(getDistro); then
@@ -68,8 +69,25 @@ fi
 
 # install softwares
 header "Installing packages"
+PACKAGE_LIST=(
+	zsh
+	vim
+    git
+    snapd
+    curl
+    tldr
+    tree
+    xxd
+    net-tools
+    sysstat
+    nmap
+    dnsutils
+    neofetch
+    lolcat
+    shellcheck
+)
 if [[ "$distro" == "Ubuntu" ]]; then
-	if apt update &>/dev/null && yes | apt install zsh vim git snapd curl tldr tree xxd net-tools sysstat nmap dnsutils neofetch lolcat shellcheck; then
+	if apt update &>/dev/null && yes | apt install "${PACKAGE_LIST[@]}"; then
 		echo "success"
 	else
 		err "apt install failed"
