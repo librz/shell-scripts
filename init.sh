@@ -9,14 +9,14 @@
 REMOTE_REPO_URL="https://github.com/librz/shell-scripts.git"
 LOCAL_REPO_PATH="$HOME/shell-scripts"
 
+echo "Cloning shell-scripts from '$REMOTE_REPO_URL' to '$LOCAL_REPO_PATH'..."
+
 if [ -d "$LOCAL_REPO_PATH" ]; then
-	echo "Folder '$LOCAL_REPO_PATH' found. Removing it..."
 	rm -rf "$LOCAL_REPO_PATH"
-	echo "Folder '$LOCAL_REPO_PATH' removed."
 fi
 
-echo "Cloning shell-scripts from '$REMOTE_REPO_URL' to '$LOCAL_REPO_PATH'..."
 git clone --quiet "$REMOTE_REPO_URL" "$LOCAL_REPO_PATH"
+
 if [ $? -eq 0 ]; then
 	echo "✅ Git clone success."
 else
