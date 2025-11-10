@@ -4,7 +4,7 @@
 # OS support: Ubuntu, macOS 
 # usage: bash <(curl -sL https://raw.githubusercontent.com/librz/shell-scripts/refs/heads/main/init.sh)
 
-# FYI: this script is idempotent (running it multiple times has the same effect as running it once)
+# FYI: this script is idempotent
 
 REMOTE_REPO_URL="https://github.com/librz/shell-scripts.git"
 LOCAL_REPO_PATH="$HOME/shell-scripts"
@@ -45,9 +45,7 @@ if [ -d "$LOCAL_REPO_PATH" ]; then
 	rm -rf "$LOCAL_REPO_PATH"
 fi
 
-git clone --quiet "$REMOTE_REPO_URL" "$LOCAL_REPO_PATH"
-
-if [ $? -eq 0 ]; then
+if git clone --quiet "$REMOTE_REPO_URL" "$LOCAL_REPO_PATH"; then
 	echo "✅ Git clone success."
 else
 	echo "❌ Git clone failed! Check the URL and permissions." >&2
@@ -69,26 +67,10 @@ fi
 
 # install softwares
 header "Installing packages"
-PACKAGE_LIST=(
-	zsh
-	vim
-	git
-	snapd
-	curl
-	tldr
-	tree
-	xxd
-	net-tools
-	sysstat
-	nmap
-	dnsutils
-	neofetch
-	lolcat
-	shellcheck
-)
+PACKAGE_LIST=(zsh vim git curl nmap tree shellcheck tldr cowsay lolcat neofetch snapd ncdu xxd net-tools sysstat dnsutils)
 if [[ "$distro" == "Ubuntu" ]]; then
 	if apt update &>/dev/null && yes | apt install "${PACKAGE_LIST[@]}"; then
-		echo "success"
+		echo "apt install success" 
 	else
 		err "apt install failed"
 		exit 2
@@ -154,4 +136,12 @@ if [[ "$distro" != "macOS" ]]; then
 fi
 
 echo
-echo "System init successful, please run: source ~/.zshrc"
+
+SUCCESS_MESSAGE="System init successful, please run: source ~/.zshrc"
+
+if command -v cowsay &> /dev/null && command -v lolcat &> /dev/null; then
+	echo "$SUCCESS_MESSAGE" | cowsay | lolcat
+else
+	echo "$SUCCESS_MESSAGE"
+fi
+
